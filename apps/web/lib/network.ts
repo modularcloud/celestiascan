@@ -4,6 +4,7 @@ import { env } from "~/env.js";
 import { CACHE_KEYS } from "./cache-keys";
 import { cache } from "react";
 import { integrations, integrationList } from "~/lib/cache";
+import { jsonFetch } from "~/lib/shared-utils";
 
 export const singleNetworkSchema = z.object({
   config: z.object({
@@ -41,6 +42,8 @@ export const singleNetworkSchema = z.object({
   internalId: z.string(),
   integrationId: z.string().uuid(),
   createdTime: z.coerce.date(),
+  namespace: z.string().optional(),
+  startHeight: z.string().optional(),
 });
 
 export type SingleNetwork = z.infer<typeof singleNetworkSchema>;
@@ -54,6 +57,19 @@ export const getAllNetworks = cache(function getAllNetworks() {
 export const getSingleNetwork = cache(async function getSingleNetwork(
   slug: string,
 ) {
+  if (env.NEXT_PUBLIC_TARGET === "electron" && slug.startsWith("local")) {
+    try {
+      return await fetch(
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        `http://127.0.0.1/${process.env.PORT}/api/local-chains/${slug}`,
+      )
+        .then((r) => r.json())
+        .then(singleNetworkSchema.parse);
+    } catch (error) {
+      return null;
+    }
+  }
+
   try {
     // @ts-expect-error
     const found = integrations[slug].value;

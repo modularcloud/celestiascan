@@ -59,10 +59,13 @@ export const CACHE_KEYS = {
     txHash,
     msgIndex,
   ],
-  ibcResolve: (resolverId: string, input: any) => [
-    "IBC_RESOLVE",
-    resolverId,
-    input,
-  ],
+  ibcResolve: (
+    resolverId: string,
+    input: {
+      hash: string;
+      step: number;
+      slug: string;
+    },
+  ) => ["IBC_RESOLVE", resolverId, input] as const,
   blob: (url: string) => ["BLOB", url],
 } as const;

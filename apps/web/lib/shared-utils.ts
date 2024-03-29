@@ -288,3 +288,9 @@ export function getMetadata(
     )} ${capitalize(network.chainName)}, brought to you by Modular Cloud.`,
   };
 }
+
+export function generateRandomString(length: number): string {
+  return Array.from({ length }, () =>
+    Math.floor(Math.random() * 36).toString(36),
+  ).join("");
+}

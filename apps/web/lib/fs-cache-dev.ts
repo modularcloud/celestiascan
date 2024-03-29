@@ -17,7 +17,7 @@ export class FileSystemCacheDEV {
     }
   }
 
-  private async computeCacheKey(id: CacheId, updatedAt?: Date | number) {
+  private computeCacheKey(id: CacheId, updatedAt?: Date | number) {
     let fullKey = Array.isArray(id) ? id.join("-") : id.toString();
     if (updatedAt) {
       fullKey += `-${new Date(updatedAt).getTime()}`;
@@ -30,12 +30,12 @@ export class FileSystemCacheDEV {
       value,
       expiry: ttl ? Date.now() + ttl * 1000 : null,
     };
-    const filePath = this.getFilePath(await this.computeCacheKey(key));
+    const filePath = this.getFilePath(this.computeCacheKey(key));
     await fs.writeFile(filePath, JSON.stringify(cacheEntry), "utf-8");
   }
 
-  async get<T>(key: string): Promise<T | null> {
-    const filePath = this.getFilePath(key);
+  async get<T>(key: CacheId): Promise<T | null> {
+    const filePath = this.getFilePath(this.computeCacheKey(key));
     try {
       const data = await fs.readFile(filePath, "utf-8");
       const cacheEntry: CacheEntry<T> = JSON.parse(data);
@@ -50,6 +50,15 @@ export class FileSystemCacheDEV {
       // If the file doesn't exist or other errors occur, return null
       return null;
     }
+  }
+
+  async search(key: CacheId): Promise<string[]> {
+    const files = await fs.readdir(this.cacheDir);
+    return Promise.all(
+      files.filter((fileName) =>
+        fileName.startsWith(this.computeCacheKey(fileName)),
+      ),
+    );
   }
 
   private getFilePath(key: string): string {
