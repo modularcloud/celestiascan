@@ -12,6 +12,7 @@ export { default as BellOn } from "./BellOn";
 export { default as Building } from "./Building";
 export { default as Calendar } from "./Calendar";
 export { default as CalendarTime } from "./CalendarTime";
+export { default as Camera } from "./Camera";
 export { default as CardOff } from "./CardOff";
 export { default as CardOn } from "./CardOn";
 export { default as CardView } from "./CardView";
