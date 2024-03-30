@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
 import fs from "node:fs/promises";
 import { env } from "~/env";
-import { localChainFormSchema } from "~/app/(register)/add-local-chain/local-chain-form-schema";
+import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
 import slugify from "@sindresorhus/slugify";
 import type { SingleNetwork } from "~/lib/network";
 import { CACHE_KEYS } from "~/lib/cache-keys";
@@ -39,12 +39,12 @@ export async function POST(request: NextRequest) {
   let logoUrl = `/images/rollkit-logo.svg`;
   if (logo) {
     await writeFileToPath(
-      `../../../public/images/logo-${networkSlug}.png`,
+      `../../../public/images/local-chains/logo-${networkSlug}.png`,
       logo,
     );
 
     logoUrl = new URL(
-      `../../../public/images/logo-${networkSlug}.png`,
+      `../../../public/images/local-chains/logo-${networkSlug}.png`,
       import.meta.url,
     ).toString();
   }
@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
     },
     namespace: body.namespace,
     startHeight: body.startHeight,
+    daLayer: body.daLayer,
     paidVersion: false,
     accountId: generateRandomString(20),
     internalId: (items.length + 1).toString(),

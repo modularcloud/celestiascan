@@ -5,6 +5,7 @@ export const localChainFormSchema = zfd.formData({
   chainName: z.string(),
   namespace: z.string().optional(),
   startHeight: z.string().optional(),
+  daLayer: z.string().optional(),
   logo: zfd.file(z.instanceof(File).optional()),
   rpcUrl: z.string().url(),
   rpcPlatform: z.enum(["cosmos"]).default("cosmos"),

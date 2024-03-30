@@ -44,6 +44,7 @@ export const singleNetworkSchema = z.object({
   createdTime: z.coerce.date(),
   namespace: z.string().optional(),
   startHeight: z.string().optional(),
+  daLayer: z.string().optional(),
 });
 
 export type SingleNetwork = z.infer<typeof singleNetworkSchema>;

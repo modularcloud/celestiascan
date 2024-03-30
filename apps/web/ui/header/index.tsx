@@ -33,7 +33,7 @@ export async function Header({ networkSlug }: Props) {
           <img
             src="/images/mc-logo.svg"
             alt="ModularCloud Logo"
-            className="h-[1.125rem] w-[1.125rem]"
+            className="h-6 w-6"
           />
 
           <h1 className="font-medium tab:text-lg">Modular Cloud</h1>
