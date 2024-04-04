@@ -20,6 +20,7 @@ export { default as ChartOff } from "./ChartOff";
 export { default as ChartOn } from "./ChartOn";
 export { default as Check } from "./Check";
 export { default as CheckCircle } from "./CheckCircle";
+export { default as CheckCircleOutline } from "./CheckCircleOutline";
 export { default as CheckOff } from "./CheckOff";
 export { default as CheckOn } from "./CheckOn";
 export { default as Checkmark } from "./Checkmark";
