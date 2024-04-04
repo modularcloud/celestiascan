@@ -1,13 +1,13 @@
 import { NextRequest } from "next/server";
 import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
-import fs from "node:fs/promises";
+import fs from "fs/promises";
 import { env } from "~/env";
 import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
 import slugify from "@sindresorhus/slugify";
 import type { SingleNetwork } from "~/lib/network";
 import { CACHE_KEYS } from "~/lib/cache-keys";
 import { generateRandomString } from "~/lib/shared-utils";
-import crypto from "node:crypto";
+import crypto from "crypto";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
