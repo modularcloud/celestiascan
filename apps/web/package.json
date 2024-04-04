@@ -56,7 +56,6 @@
     "date-fns": "^3.3.1",
     "dayjs": "^1.11.7",
     "decimal.js": "^10.4.3",
-    "file-type": "^19.0.0",
     "lucide-react": "^0.259.0",
     "next": "^14.2.0-canary.39",
     "react": "^18.2.0",
@@ -74,7 +73,6 @@
     "tsx": "^4.7.1",
     "web3": "^1.8.2",
     "zod": "^3.20.6",
-    "zod-form-data": "^2.0.2",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
