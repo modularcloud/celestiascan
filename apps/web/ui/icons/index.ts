@@ -94,4 +94,5 @@ export { default as Undo } from "./Undo";
 export { default as UserOff } from "./UserOff";
 export { default as UserOn } from "./UserOn";
 export { default as Warning } from "./Warning";
+export { default as Wifi } from "./Wifi";
 export { default as XCircle } from "./XCircle";
