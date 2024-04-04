@@ -1,9 +1,7 @@
-import { fileTypeFromBuffer } from "file-type";
 import { z, preprocess } from "zod";
-import { zfd } from "zod-form-data";
 
-async function readFileAsBuffer(file: File) {
-  return await new Promise<ArrayBuffer>((resolve, reject) => {
+async function isFileAnImage(file: File) {
+  const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       if (fileReader.result instanceof ArrayBuffer) {
@@ -12,13 +10,46 @@ async function readFileAsBuffer(file: File) {
     };
     fileReader.readAsArrayBuffer(file);
   });
+
+  const first4Bytes = new Uint8Array(buffer).subarray(0, 4);
+  let fileHeader = "";
+  let mimeType: string | null = null;
+
+  for (const byte of first4Bytes) {
+    fileHeader += byte.toString(16);
+  }
+
+  switch (fileHeader) {
+    case "89504e47": {
+      mimeType = "image/png";
+      break;
+    }
+    case "47494638": {
+      mimeType = "image/gif";
+      break;
+    }
+    case "52494646":
+    case "57454250":
+      mimeType = "image/webp";
+      break;
+    case "ffd8ffe0":
+    case "ffd8ffe1":
+    case "ffd8ffe2":
+    case "ffd8ffe3":
+    case "ffd8ffe8":
+      mimeType = "image/jpeg";
+      break;
+  }
+
+  console.log("Header:", fileHeader);
+  return mimeType !== null;
 }
 
 export const localChainFormSchema = z
   .object({
     chainName: z.string().min(1),
     namespace: z.string().optional(),
-    startHeight: z.string().optional(),
+    startHeight: z.coerce.number().int().optional(),
     daLayer: z.string().optional(),
     logo: z.instanceof(File).optional(),
     rpcUrl: z.string().url(),
@@ -34,10 +65,7 @@ export const localChainFormSchema = z
       console.log({
         dataLogo: data.logo,
       });
-      const fileType = await fileTypeFromBuffer(
-        await readFileAsBuffer(data.logo),
-      );
-      return fileType && fileType.mime.startsWith("image/");
+      return await isFileAnImage(data.logo);
     }
     return true;
   }, "The file you tried to upload is not an image.");

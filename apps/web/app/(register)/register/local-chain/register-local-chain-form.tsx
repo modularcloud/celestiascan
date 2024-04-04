@@ -8,7 +8,14 @@ import { z } from "zod";
 import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
 import { jsonFetch } from "~/lib/shared-utils";
 import { Button } from "~/ui/button";
-import { Camera, Link as LinkIcon, Warning, Wifi } from "~/ui/icons";
+import {
+  Camera,
+  CheckCircle,
+  Link as LinkIcon,
+  Loader,
+  Warning,
+  Wifi,
+} from "~/ui/icons";
 import { Input } from "~/ui/input";
 import { LoadingIndicator } from "~/ui/loading-indicator";
 import { Select, SelectContent, SelectItem } from "~/ui/select";
@@ -70,6 +77,9 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   const formRef = React.useRef<React.ElementRef<"form">>(null);
   const [isCheckingNetworkStatus, startNetworkStatusTransition] =
     React.useTransition();
+  const [networkStatus, setNetworkStatus] = React.useState<
+    "HEALTHY" | "UNHEALTHY" | null
+  >(null);
 
   const fieldErrors = errors?.fieldErrors;
   const formErrors = errors?.formErrors;
@@ -190,38 +200,69 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
           renderLeadingIcon={(cls) => (
             <LinkIcon className={cls} aria-hidden="true" />
           )}
-          // onBlur={(e) => {
-          //   const value = e.currentTarget.value;
-          //   if (value.trim()) {
-          //     startNetworkStatusTransition(async () => {
-          //       try {
-          //         const { result } = await jsonFetch(
-          //           new URL(`${value}/status`),
-          //           { credentials: undefined },
-          //         ).then((response) => rpcStatusResponseSchema.parse(response));
-          //         console.log({
-          //           result,
-          //         });
-          //       } catch (error) {
-          //         // do nothing...
-          //       }
-          //     });
-          //   }
-          // }}
+          onChange={() => setNetworkStatus(null)}
+          onBlur={(e) => {
+            const value = e.currentTarget.value;
+            if (value.trim()) {
+              startNetworkStatusTransition(async () => {
+                try {
+                  await jsonFetch(new URL(`${value}/status`), {
+                    credentials: undefined,
+                  })
+                    .then((response) => rpcStatusResponseSchema.parse(response))
+                    .then(() => {
+                      setNetworkStatus("HEALTHY");
+                    });
+                } catch (error) {
+                  // do nothing...
+                  setNetworkStatus("UNHEALTHY");
+                }
+              });
+            }
+          }}
         />
       </div>
 
-      {isCheckingNetworkStatus && (
-        <div
-          aria-live="polite"
-          className="bg-blue-50 border border-blue-100/75 rounded-md flex justify-center gap-1 items-center py-1.5 px-3"
-        >
-          <span>Connecting</span>
-          <Wifi
-            className="animate-pulse text-blue-600 h-4 w-4"
-            aria-hidden="true"
-          />
-        </div>
+      {isCheckingNetworkStatus ? (
+        <Alert variant="info" className="py-1.5 px-3">
+          <AlertDescription className="flex justify-center gap-1 items-center">
+            <span>Connecting</span>
+            <Loader
+              className="animate-spin text-blue-600 h-4 w-4"
+              aria-hidden="true"
+            />
+          </AlertDescription>
+        </Alert>
+      ) : (
+        networkStatus &&
+        (networkStatus === "HEALTHY" ? (
+          <Alert
+            variant="success"
+            className="py-1.5 px-3 flex gap-2 items-center"
+          >
+            <div className="h-full flex items-center">
+              <CheckCircle
+                className="h-4 w-4 flex-none text-teal-500"
+                aria-hidden="true"
+              />
+            </div>
+
+            <AlertDescription className="flex justify-center gap-1 items-center">
+              Connection successful. This node is healthy.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Alert variant="danger" className="flex gap-2">
+            <div className="h-full flex items-center">
+              <Warning className="h-4 w-4 flex-none" aria-hidden="true" />
+            </div>
+
+            <AlertDescription className="flex flex-col gap-1">
+              <span>Connection unsuccessful.</span>
+              <span>Please ensure your node is online.</span>
+            </AlertDescription>
+          </Alert>
+        ))
       )}
 
       <div className="grid grid-cols-2 gap-3">
