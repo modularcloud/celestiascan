@@ -43,7 +43,7 @@ export const singleNetworkSchema = z.object({
   integrationId: z.string().uuid(),
   createdTime: z.coerce.date(),
   namespace: z.string().optional(),
-  startHeight: z.string().optional(),
+  startHeight: z.coerce.number().optional(),
   daLayer: z.string().optional(),
 });
 
