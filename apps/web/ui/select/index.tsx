@@ -55,6 +55,7 @@ export const Select = React.forwardRef<
       >
         <p>{label}</p>
         <div
+          aria-hidden="true"
           className={cn(
             "flex justify-between w-full",
             "flex w-full items-center gap-2 rounded-lg border px-3",

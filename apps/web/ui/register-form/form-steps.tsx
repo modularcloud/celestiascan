@@ -45,36 +45,6 @@ const DEFAULT_TOOLKITS = [
     name: "Rollkit",
     logo: "/images/rollkit-logo.svg",
   },
-  // {
-  //   value: "DYMINT",
-  //   name: "Dymint",
-  //   logo: "/images/dymension-logo.svg",
-  // },
-  // {
-  //   value: "ZK_STACK",
-  //   name: "ZK Stack",
-  //   logo: "/images/zk_stack.svg",
-  // },
-  // {
-  //   value: "OP_STACK",
-  //   name: "OP Stack",
-  //   logo: "/images/op_stack.svg",
-  // },
-  // {
-  //   value: "ORBIT_STACK",
-  //   name: "Orbit Stack",
-  //   logo: "/images/orbit_stack.svg",
-  // },
-  // {
-  //   value: "CDK",
-  //   name: "CDK",
-  //   logo: "/images/cdk.svg",
-  // },
-  // {
-  //   value: "Sovereign",
-  //   name: "Sovereign",
-  //   logo: "/images/sovereign.svg",
-  // },
 ];
 
 const DEFAULT_LAYERS = [
@@ -88,21 +58,6 @@ const DEFAULT_LAYERS = [
     name: "Celestia",
     logo: "/images/celestia-logo.svg",
   },
-  // {
-  //   value: "AVAIL",
-  //   name: "Avail",
-  //   logo: "/images/avail.png",
-  // },
-  // {
-  //   value: "EIGEN_DA",
-  //   name: "EigenDA",
-  //   logo: "/images/eigen_da.png",
-  // },
-  // {
-  //   value: "NEAR",
-  //   name: "Near",
-  //   logo: "/images/near.svg",
-  // },
 ];
 
 export function DetailStepForm({ defaultValues, errors }: FormStepProps) {

@@ -6,6 +6,7 @@ export type InputProps = Omit<
   "size" | "defaultValue"
 > & {
   inputClassName?: string;
+  labelClassName?: string;
   helpText?: string;
   renderLeadingIcon?: (classNames: string) => React.ReactNode;
   renderTrailingIcon?: (classNames: string) => React.ReactNode;
@@ -22,6 +23,7 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
       className,
       helpText,
       inputClassName,
+      labelClassName,
       label,
       renderLeadingIcon,
       renderTrailingIcon,
@@ -44,7 +46,10 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
 
     return (
       <div className={cn(className, "flex w-full flex-col gap-1")}>
-        <label htmlFor={defaultId ?? id} className={cn(hideLabel && "sr-only")}>
+        <label
+          htmlFor={defaultId ?? id}
+          className={cn(hideLabel && "sr-only", labelClassName)}
+        >
           {label}
         </label>
         <div

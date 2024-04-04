@@ -4,6 +4,9 @@ import { env } from "~/env";
 import type { SingleNetwork } from "~/lib/network";
 import { CACHE_KEYS } from "~/lib/cache-keys";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET(
   request: NextRequest,
   ctx: { params: { slug: string } },

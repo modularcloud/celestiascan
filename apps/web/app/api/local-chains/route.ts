@@ -9,6 +9,9 @@ import { CACHE_KEYS } from "~/lib/cache-keys";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "node:crypto";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET === "electron") {
     return Response.json(
