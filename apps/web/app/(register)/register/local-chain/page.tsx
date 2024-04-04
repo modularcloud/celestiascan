@@ -10,7 +10,7 @@ import type { Metadata } from "next";
 export interface PageProps {}
 
 export const metadata: Metadata = {
-  title: "Register a Chain",
+  title: "Register a Local Chain",
 };
 
 export default function Page(props: PageProps) {

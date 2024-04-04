@@ -156,7 +156,7 @@ export async function jsonFetch<T>(
     ...options,
     body: options.body ? JSON.stringify(options.body) : undefined,
     headers,
-    credentials: "include",
+    credentials: "credentials" in options ? options.credentials : "include",
   })
     .then(async (response) => {
       const text = await response.text();

@@ -4,18 +4,29 @@
 import * as React from "react";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
+import { z } from "zod";
 import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
+import { jsonFetch } from "~/lib/shared-utils";
 import { Button } from "~/ui/button";
-import { Camera, Link as LinkIcon, Warning } from "~/ui/icons";
+import { Camera, Link as LinkIcon, Warning, Wifi } from "~/ui/icons";
 import { Input } from "~/ui/input";
 import { LoadingIndicator } from "~/ui/loading-indicator";
 import { Select, SelectContent, SelectItem } from "~/ui/select";
-import { fileTypeFromBuffer } from "file-type";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "~/ui/shadcn/components/ui/alert";
+
+const rpcStatusResponseSchema = z.object({
+  result: z.object({
+    sync_info: z.object({
+      catching_up: z.boolean(),
+      earliest_block_height: z.coerce.number(),
+      latest_block_height: z.coerce.number(),
+    }),
+  }),
+});
 
 export type RegisterLocalChainFormProps = {};
 
@@ -57,13 +68,11 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   );
   const [errors, action] = useFormState(formAction, null);
   const formRef = React.useRef<React.ElementRef<"form">>(null);
+  const [isCheckingNetworkStatus, startNetworkStatusTransition] =
+    React.useTransition();
 
   const fieldErrors = errors?.fieldErrors;
   const formErrors = errors?.formErrors;
-  console.log({
-    fieldErrors,
-    formErrors,
-  });
 
   return (
     <form className="flex flex-col gap-4" ref={formRef} action={action}>
@@ -152,7 +161,6 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         type="text"
         placeholder="353000"
         name="startHeight"
-        defaultValue={""}
         error={fieldErrors?.startHeight}
       />
 
@@ -177,14 +185,44 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
           placeholder="https://..."
           className="col-span-4 px-2"
           name="rpcUrl"
-          defaultValue={""}
           required
           error={fieldErrors?.rpcUrl}
           renderLeadingIcon={(cls) => (
             <LinkIcon className={cls} aria-hidden="true" />
           )}
+          // onBlur={(e) => {
+          //   const value = e.currentTarget.value;
+          //   if (value.trim()) {
+          //     startNetworkStatusTransition(async () => {
+          //       try {
+          //         const { result } = await jsonFetch(
+          //           new URL(`${value}/status`),
+          //           { credentials: undefined },
+          //         ).then((response) => rpcStatusResponseSchema.parse(response));
+          //         console.log({
+          //           result,
+          //         });
+          //       } catch (error) {
+          //         // do nothing...
+          //       }
+          //     });
+          //   }
+          // }}
         />
       </div>
+
+      {isCheckingNetworkStatus && (
+        <div
+          aria-live="polite"
+          className="bg-blue-50 border border-blue-100/75 rounded-md flex justify-center gap-1 items-center py-1.5 px-3"
+        >
+          <span>Connecting</span>
+          <Wifi
+            className="animate-pulse text-blue-600 h-4 w-4"
+            aria-hidden="true"
+          />
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3">
         <Input
