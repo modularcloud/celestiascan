@@ -35,6 +35,49 @@ const rpcStatusResponseSchema = z.object({
   }),
 });
 
+async function isFileAnImage(file: Blob) {
+  const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      if (fileReader.result instanceof ArrayBuffer) {
+        resolve(fileReader.result);
+      }
+    };
+    fileReader.readAsArrayBuffer(file);
+  });
+
+  const first4Bytes = new Uint8Array(buffer).subarray(0, 4);
+  let fileHeader = "";
+  let mimeType: string | null = null;
+
+  for (const byte of first4Bytes) {
+    fileHeader += byte.toString(16);
+  }
+
+  switch (fileHeader) {
+    case "89504e47": {
+      mimeType = "image/png";
+      break;
+    }
+    case "47494638": {
+      mimeType = "image/gif";
+      break;
+    }
+    case "52494646":
+    case "57454250":
+      mimeType = "image/webp";
+      break;
+    case "ffd8ffe0":
+    case "ffd8ffe1":
+    case "ffd8ffe2":
+    case "ffd8ffe3":
+    case "ffd8ffe8":
+      mimeType = "image/jpeg";
+      break;
+  }
+  return mimeType !== null;
+}
+
 export type RegisterLocalChainFormProps = {};
 
 async function readFileAsDataURL(file: File) {
@@ -70,11 +113,21 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
 
   async function formAction(_: any, formData: FormData) {
     console.log("FORMACTION");
-    if (formRef.current?.logo.files.length === 0) {
-      // we do this because the logo will have a value even if we don't select any file,
-      // so this way if there is truly no selected file, it returns `undefined`
-      formData.delete("logo");
+    if (formData.get("logo")) {
+      if (formRef.current?.logo.files.length === 0) {
+        // we do this because the logo will have a value even if we don't select any file,
+        // so this way if there is truly no selected file, it returns `undefined`
+        formData.delete("logo");
+      } else {
+        if (!(await isFileAnImage(formData.get("logo") as Blob))) {
+          return {
+            fieldErrors: null,
+            formErrors: ["The file you tried to upload is not an image."],
+          };
+        }
+      }
     }
+
     const parseResult = await localChainFormSchema.safeParseAsync(formData);
     if (parseResult.success) {
       const data = parseResult.data;
@@ -322,7 +375,8 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         color="primary"
         className="px-3 py-1 w-full md:w-auto text-center items-center justify-center gap-1 mt-6"
         onClick={(e: EventFor<"button", "onClick">) => {
-          const formData = new FormData(e.currentTarget.form!);
+          const form = e.currentTarget.form!;
+          const formData = new FormData(form);
           const rpcUrl = formData.get("rpcUrl")?.toString().trim();
           console.log({ rpcUrl, networkStatus });
           if (rpcUrl && networkStatus?.[rpcUrl] !== "HEALTHY") {
@@ -331,7 +385,7 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
             startNetworkStatusTransition(
               async () =>
                 await fetchNetworkStatus(rpcUrl).then(() =>
-                  e.currentTarget.form!.requestSubmit(),
+                  form.requestSubmit(),
                 ),
             );
           }

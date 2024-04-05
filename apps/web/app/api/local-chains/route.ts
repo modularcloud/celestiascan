@@ -8,6 +8,7 @@ import type { SingleNetwork } from "~/lib/network";
 import { CACHE_KEYS } from "~/lib/cache-keys";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "crypto";
+import { fileTypeFromBlob } from "file-type";
 
 export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET !== "electron") {
@@ -20,16 +21,24 @@ export async function POST(request: NextRequest) {
       { status: 403 },
     );
   }
-  const result = await localChainFormSchema.safeParseAsync(
-    await request.formData(),
-  );
+  const formData = await request.formData();
+  const logoFile = formData.get("logo");
+
+  if (logoFile instanceof File) {
+    const logoImageType = await fileTypeFromBlob(logoFile);
+    if (!logoImageType) {
+      return Response.json(
+        {
+          formErrors: ["The file you tried to upload is not an image."],
+        },
+        { status: 422 },
+      );
+    }
+  }
+
+  const result = await localChainFormSchema.safeParseAsync(formData);
   if (!result.success) {
-    return Response.json(
-      {
-        errors: result.error.flatten().fieldErrors,
-      },
-      { status: 422 },
-    );
+    return Response.json(result.error.flatten(), { status: 422 });
   }
 
   const { logo, ...body } = result.data;
@@ -96,21 +105,7 @@ export async function POST(request: NextRequest) {
   });
 }
 
-async function fileToBuffer(file: Blob) {
-  return new Promise<Buffer>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const arrayBuffer = event.target?.result as ArrayBuffer;
-      const buffer = Buffer.from(arrayBuffer);
-      resolve(buffer);
-    };
-    reader.onerror = (err) => {
-      reject(err);
-    };
-    reader.readAsArrayBuffer(file);
-  });
-}
-
-async function writeFileToPath(filePath: string, data: Blob): Promise<void> {
-  await fs.writeFile(filePath, await fileToBuffer(data));
+async function writeFileToPath(filePath: string, blob: Blob): Promise<void> {
+  const buffer = Buffer.from(await blob.arrayBuffer());
+  await fs.writeFile(filePath, buffer);
 }
