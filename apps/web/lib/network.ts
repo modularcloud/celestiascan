@@ -1,14 +1,21 @@
 import "server-only";
-import { z } from "zod";
+import { preprocess, z } from "zod";
 import { env } from "~/env.js";
 import { CACHE_KEYS } from "./cache-keys";
 import { cache } from "react";
 import { integrations, integrationList } from "~/lib/cache";
-import { jsonFetch } from "~/lib/shared-utils";
 
 export const singleNetworkSchema = z.object({
   config: z.object({
-    logoUrl: z.string().url(),
+    logoUrl: preprocess((arg) => {
+      if (typeof arg === "string") {
+        if (!arg.startsWith("http")) {
+          // eslint-disable-next-line turbo/no-undeclared-env-vars
+          return `http://127.0.0.1:${process.env.PORT ?? 3000}${arg}`;
+        }
+      }
+      return arg;
+    }, z.string().url()),
     rpcUrls: z.record(
       z.enum(["evm", "cosmos", "svm", "celestia"]),
       z.string().url(),
@@ -62,7 +69,7 @@ export const getSingleNetwork = cache(async function getSingleNetwork(
     try {
       return await fetch(
         // eslint-disable-next-line turbo/no-undeclared-env-vars
-        `http://127.0.0.1/${process.env.PORT}/api/local-chains/${slug}`,
+        `http://127.0.0.1:${process.env.PORT ?? 3000}/api/local-chains/${slug}`,
       )
         .then((r) => r.json())
         .then(singleNetworkSchema.parse);
