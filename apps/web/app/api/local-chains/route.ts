@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
   let logoUrl = `/images/rollkit-logo.svg`;
   if (logo) {
     await writeFileToPath(
-      `../../../public/images/local-chains/logo-${networkSlug}.png`,
+      `./public/images/local-chains/logo-${networkSlug}.png`,
       logo,
     );
 
