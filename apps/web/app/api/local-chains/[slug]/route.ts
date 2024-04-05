@@ -11,7 +11,7 @@ export async function GET(
   request: NextRequest,
   ctx: { params: { slug: string } },
 ) {
-  if (env.NEXT_PUBLIC_TARGET === "electron") {
+  if (env.NEXT_PUBLIC_TARGET !== "electron") {
     return Response.json(
       {
         errors: {
