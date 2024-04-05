@@ -9,9 +9,6 @@ import { CACHE_KEYS } from "~/lib/cache-keys";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "crypto";
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
 export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET !== "electron") {
     return Response.json(
@@ -48,10 +45,7 @@ export async function POST(request: NextRequest) {
       logo,
     );
 
-    // logoUrl = new URL(
-    //   `../../../public/images/local-chains/logo-${networkSlug}.png`,
-    //   import.meta.url,
-    // ).toString();
+    logoUrl = `/images/local-chains/logo-${networkSlug}.png`;
   }
   const chainData = {
     chainName: body.chainName,
@@ -81,6 +75,22 @@ export async function POST(request: NextRequest) {
   } satisfies SingleNetwork;
 
   await fsCache.set(CACHE_KEYS.networks.single(networkSlug), chainData);
+  const fsCacheForLibFolder = new FileSystemCacheDEV("./lib/cache");
+
+  const integrationList =
+    (await fsCacheForLibFolder.get<SingleNetwork[]>("integration-summary")) ??
+    [];
+
+  const chainIndex = integrationList.findIndex(
+    (item) => item.slug === networkSlug,
+  );
+  if (chainIndex !== -1) {
+    integrationList.splice(chainIndex, 1);
+  }
+  integrationList.push(chainData);
+
+  await fsCacheForLibFolder.set("integration-summary", integrationList);
+
   return Response.json({
     success: true,
   });
