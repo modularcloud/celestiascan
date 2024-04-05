@@ -1,6 +1,7 @@
 import { z, preprocess } from "zod";
+import { zfd } from "zod-form-data";
 
-async function isFileAnImage(file: File) {
+async function isFileAnImage(file: Blob) {
   const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
@@ -45,26 +46,23 @@ async function isFileAnImage(file: File) {
   return mimeType !== null;
 }
 
-export const localChainFormSchema = z
-  .object({
-    chainName: z.string().min(1),
-    namespace: z.string().optional(),
+export const localChainFormSchema = zfd
+  .formData({
+    chainName: z.string().trim().min(1),
+    namespace: z.string().trim().optional(),
     startHeight: z.coerce.number().int().optional(),
-    daLayer: z.string().optional(),
-    logo: z.instanceof(File).optional(),
-    rpcUrl: z.string().url(),
+    daLayer: z.string().trim().optional(),
+    logo: zfd.file(z.instanceof(Blob).nullish()),
+    rpcUrl: z.string().trim().url(),
     rpcPlatform: preprocess(
       (arg) => (typeof arg === "string" ? arg.toLowerCase() : arg),
       z.enum(["cosmos"]).default("cosmos"),
     ),
     tokenDecimals: z.coerce.number().int().positive(),
-    tokenName: z.string().min(1),
+    tokenName: z.string().trim().min(1),
   })
   .refine(async (data) => {
     if (data.logo) {
-      console.log({
-        dataLogo: data.logo,
-      });
       return await isFileAnImage(data.logo);
     }
     return true;

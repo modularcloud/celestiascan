@@ -13,7 +13,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  if (env.NEXT_PUBLIC_TARGET === "electron") {
+  if (env.NEXT_PUBLIC_TARGET !== "electron") {
     return Response.json(
       {
         errors: {
@@ -23,7 +23,9 @@ export async function POST(request: NextRequest) {
       { status: 403 },
     );
   }
-  const result = localChainFormSchema.safeParse(await request.formData());
+  const result = await localChainFormSchema.safeParseAsync(
+    await request.formData(),
+  );
   if (!result.success) {
     return Response.json(
       {
@@ -46,10 +48,10 @@ export async function POST(request: NextRequest) {
       logo,
     );
 
-    logoUrl = new URL(
-      `../../../public/images/local-chains/logo-${networkSlug}.png`,
-      import.meta.url,
-    ).toString();
+    // logoUrl = new URL(
+    //   `../../../public/images/local-chains/logo-${networkSlug}.png`,
+    //   import.meta.url,
+    // ).toString();
   }
   const chainData = {
     chainName: body.chainName,
@@ -84,7 +86,7 @@ export async function POST(request: NextRequest) {
   });
 }
 
-async function fileToBuffer(file: File) {
+async function fileToBuffer(file: Blob) {
   return new Promise<Buffer>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -99,6 +101,6 @@ async function fileToBuffer(file: File) {
   });
 }
 
-async function writeFileToPath(filePath: string, data: File): Promise<void> {
+async function writeFileToPath(filePath: string, data: Blob): Promise<void> {
   await fs.writeFile(filePath, await fileToBuffer(data));
 }

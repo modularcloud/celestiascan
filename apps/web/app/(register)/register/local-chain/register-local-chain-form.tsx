@@ -7,14 +7,14 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
 import { jsonFetch } from "~/lib/shared-utils";
+import { EventFor } from "~/lib/types";
 import { Button } from "~/ui/button";
 import {
   Camera,
-  CheckCircle,
+  CheckCircleOutline,
   Link as LinkIcon,
   Loader,
   Warning,
-  Wifi,
 } from "~/ui/icons";
 import { Input } from "~/ui/input";
 import { LoadingIndicator } from "~/ui/loading-indicator";
@@ -55,21 +55,6 @@ async function readFileAsDataURL(file: File) {
 }
 
 export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
-  async function formAction(_: any, formData: FormData) {
-    const parseResult = await localChainFormSchema.safeParseAsync({
-      ...Object.fromEntries(formData.entries()),
-      logo:
-        formRef.current?.logo.files.length > 0
-          ? formRef.current?.logo.files[0]
-          : null,
-    });
-    if (parseResult.success) {
-      console.log({ data: parseResult.data });
-    } else {
-      return parseResult.error.flatten();
-    }
-  }
-
   const [logoFileDataURL, setLogoFileDataURL] = React.useState<string | null>(
     null,
   );
@@ -77,13 +62,66 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   const formRef = React.useRef<React.ElementRef<"form">>(null);
   const [isCheckingNetworkStatus, startNetworkStatusTransition] =
     React.useTransition();
-  const [networkStatus, setNetworkStatus] = React.useState<
-    "HEALTHY" | "UNHEALTHY" | null
-  >(null);
+  const [isSubmitting, startTransition] = React.useTransition();
+  const [networkStatus, setNetworkStatus] = React.useState<{
+    [rpcURL: string]: "HEALTHY" | "UNHEALTHY";
+  } | null>(null);
+  const [rpcUrl, setRPCUrl] = React.useState("");
 
-  const fieldErrors = errors?.fieldErrors;
+  async function formAction(_: any, formData: FormData) {
+    console.log("FORMACTION");
+    if (formRef.current?.logo.files.length === 0) {
+      // we do this because the logo will have a value even if we don't select any file,
+      // so this way if there is truly no selected file, it returns `undefined`
+      formData.delete("logo");
+    }
+    const parseResult = await localChainFormSchema.safeParseAsync(formData);
+    if (parseResult.success) {
+      const data = parseResult.data;
+
+      console.log({ data, formData });
+      startTransition(async () => {
+        const res = await fetch("/api/local-chains", {
+          body: formData,
+          method: "POST",
+          headers: {
+            accept: "application/json",
+          },
+        });
+
+        console.log({
+          res,
+        });
+      });
+    } else {
+      return parseResult.error.flatten();
+    }
+  }
+
+  async function fetchNetworkStatus(rpcURL: string) {
+    try {
+      await jsonFetch(new URL(`${rpcURL}/status`), {
+        credentials: undefined,
+      })
+        .then((response) => rpcStatusResponseSchema.parse(response))
+        .then(() => {
+          setNetworkStatus({
+            [rpcURL]: "HEALTHY",
+          });
+        });
+    } catch (error) {
+      setNetworkStatus({
+        [rpcURL]: "UNHEALTHY",
+      });
+    }
+  }
+
+  const fieldErrors = errors?.fieldErrors as unknown as Record<
+    string,
+    string[] | undefined
+  >;
   const formErrors = errors?.formErrors;
-
+  console.log("RENDER", { fieldErrors });
   return (
     <form className="flex flex-col gap-4" ref={formRef} action={action}>
       {formErrors && formErrors?.length > 0 && (
@@ -200,24 +238,16 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
           renderLeadingIcon={(cls) => (
             <LinkIcon className={cls} aria-hidden="true" />
           )}
-          onChange={() => setNetworkStatus(null)}
+          onChange={(e) => {
+            setRPCUrl(e.currentTarget.value.trim());
+            setNetworkStatus(null);
+          }}
           onBlur={(e) => {
-            const value = e.currentTarget.value;
-            if (value.trim()) {
-              startNetworkStatusTransition(async () => {
-                try {
-                  await jsonFetch(new URL(`${value}/status`), {
-                    credentials: undefined,
-                  })
-                    .then((response) => rpcStatusResponseSchema.parse(response))
-                    .then(() => {
-                      setNetworkStatus("HEALTHY");
-                    });
-                } catch (error) {
-                  // do nothing...
-                  setNetworkStatus("UNHEALTHY");
-                }
-              });
+            const value = e.currentTarget.value.trim();
+            if (value && networkStatus?.[value] !== "HEALTHY") {
+              startNetworkStatusTransition(
+                async () => await fetchNetworkStatus(value),
+              );
             }
           }}
         />
@@ -235,13 +265,13 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         </Alert>
       ) : (
         networkStatus &&
-        (networkStatus === "HEALTHY" ? (
+        (networkStatus[rpcUrl] === "HEALTHY" ? (
           <Alert
             variant="success"
             className="py-1.5 px-3 flex gap-2 items-center"
           >
             <div className="h-full flex items-center">
-              <CheckCircle
+              <CheckCircleOutline
                 className="h-4 w-4 flex-none text-teal-500"
                 aria-hidden="true"
               />
@@ -291,8 +321,24 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         type="submit"
         color="primary"
         className="px-3 py-1 w-full md:w-auto text-center items-center justify-center gap-1 mt-6"
+        onClick={(e: EventFor<"button", "onClick">) => {
+          const formData = new FormData(e.currentTarget.form!);
+          const rpcUrl = formData.get("rpcUrl")?.toString().trim();
+          console.log({ rpcUrl, networkStatus });
+          if (rpcUrl && networkStatus?.[rpcUrl] !== "HEALTHY") {
+            e.preventDefault();
+            console.log("PREVENT DEFAULT");
+            startNetworkStatusTransition(
+              async () =>
+                await fetchNetworkStatus(rpcUrl).then(() =>
+                  e.currentTarget.form!.requestSubmit(),
+                ),
+            );
+          }
+        }}
+        aria-disabled={isSubmitting}
       >
-        {/* <LoadingIndicator className="text-white h-4 w-4" /> */}
+        {isSubmitting && <LoadingIndicator className="text-white h-4 w-4" />}
         <span>Submit</span>
       </Button>
     </form>
