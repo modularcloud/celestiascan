@@ -127,15 +127,6 @@ export function SearchModal({
     ? networkStatus?.[currentNetwork.slug]?.healthy ?? null
     : null;
 
-  let logoSRC: string | null = null;
-  if (currentNetwork) {
-    let logoUrl = new URL(currentNetwork.logoURL);
-    logoSRC = logoUrl.toString();
-    if (logoUrl.hostname === "localhost" || logoUrl.hostname === "127.0.0.1") {
-      logoSRC = logoUrl.pathname;
-    }
-  }
-
   return (
     <Dialog
       open={isDialogOpen}
@@ -201,7 +192,7 @@ export function SearchModal({
                         <LoadingIndicator className="h-4 w-4 text-primary" />
                       ) : (
                         <Image
-                          src={logoSRC!}
+                          src={currentNetwork.logoURL}
                           width={16}
                           height={16}
                           alt={`${currentNetwork.displayName} logo`}

@@ -194,12 +194,6 @@ const BrandChains = React.memo(function BrandChains({
   const MAX_Z_INDEX = 999_999_999;
   const isPremiumChain = options[0].verified;
 
-  let logoUrl = new URL(options[0].logoURL);
-  let logoSRC = logoUrl.toString();
-  if (logoUrl.hostname === "localhost" || logoUrl.hostname === "127.0.0.1") {
-    logoSRC = logoUrl.pathname;
-  }
-
   return (
     <div
       role="gridcell"
@@ -230,7 +224,7 @@ const BrandChains = React.memo(function BrandChains({
             {groupName} logo
           </span>
           <Image
-            src={logoSRC}
+            src={options[0].logoURL}
             height="16"
             width="16"
             alt={``}
