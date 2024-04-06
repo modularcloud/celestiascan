@@ -9,7 +9,7 @@ export const localChains = sqliteTable("local_chains", {
     .notNull()
     .$type<SingleNetwork["config"]>(),
   paidVersion: integer("paidVersion", { mode: "boolean" }).notNull(),
-  slug: text("brand").notNull().unique(),
+  slug: text("slug").notNull().unique(),
   accountId: text("accountId").notNull(),
   integrationId: text("integrationId").notNull(),
   namespace: text("namespace"),

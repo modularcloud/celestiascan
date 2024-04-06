@@ -8,6 +8,8 @@ import crypto from "crypto";
 import { fileTypeFromBlob } from "file-type";
 import { db } from "~/lib/db";
 import { localChains } from "~/lib/db/schema/local-chains.sql";
+import { revalidateTag } from "next/cache";
+import { CACHE_KEYS } from "~/lib/cache-keys";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -48,7 +50,6 @@ export async function POST(request: NextRequest) {
   }
 
   const { logo, ...body } = result.data;
-  const networkSlug = `local-${slugify(body.chainName)}`;
 
   let logoUrl = `/images/rollkit-logo.svg`;
   if (logo) {
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
   const chainData = {
     chainName: body.chainName,
     brand: "local",
-    slug: networkSlug,
+    slug: `local-${slugify(body.chainName)}`,
     config: {
       logoUrl,
       rpcUrls: {
@@ -86,6 +87,15 @@ export async function POST(request: NextRequest) {
     createdTime: new Date(),
   } satisfies SingleNetwork;
 
+  const {
+    config: { logoUrl: _, ...restConfig },
+    ...rest
+  } = chainData;
+  console.log({
+    ...rest,
+    config: { ...restConfig },
+  });
+
   await db
     .insert(localChains)
     .values(chainData)
@@ -98,6 +108,10 @@ export async function POST(request: NextRequest) {
         daLayer: chainData.daLayer,
       },
     });
+
+  for (const tag of CACHE_KEYS.networks.local()) {
+    revalidateTag(tag);
+  }
 
   return Response.json({
     success: true,

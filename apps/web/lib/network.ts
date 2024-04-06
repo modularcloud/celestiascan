@@ -68,6 +68,7 @@ export const getAllNetworks = cache(async function getAllNetworks() {
         })
         .then(allNetworkSchema.parse);
     } catch (error) {
+      console.dir(error, { depth: null });
       //... do absolutely nothing
     }
   }
