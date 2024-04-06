@@ -7,6 +7,7 @@ import type { HeadlessRoute } from "./headless-utils";
 export const CACHE_KEYS = {
   networks: {
     all: () => ["INTEGRATION"],
+    local: () => [...CACHE_KEYS.networks.all(), "LOCAL"],
     summary: (nexToken: string | null = null) => [
       ...CACHE_KEYS.networks.all(),
       "INTEGRATION_SUMMARY",

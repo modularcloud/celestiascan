@@ -41,17 +41,39 @@ export const singleNetworkSchema = z.object({
   internalId: z.string(),
   integrationId: z.string().uuid(),
   createdTime: z.coerce.date(),
-  namespace: z.string().optional(),
-  startHeight: z.coerce.number().optional(),
-  daLayer: z.string().optional(),
+  namespace: z.string().nullish(),
+  startHeight: z.coerce.number().nullish(),
+  daLayer: z.string().nullish(),
 });
 
 export type SingleNetwork = z.infer<typeof singleNetworkSchema>;
 
 const allNetworkSchema = z.array(singleNetworkSchema);
 
-export const getAllNetworks = cache(function getAllNetworks() {
-  return allNetworkSchema.parse(integrationList.value);
+export const getAllNetworks = cache(async function getAllNetworks() {
+  let localChains: SingleNetwork[] = [];
+  if (env.NEXT_PUBLIC_TARGET === "electron") {
+    try {
+      localChains = await fetch(
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        `http://127.0.0.1:${process.env.PORT ?? 3000}/api/local-chains/`,
+        {
+          next: { tags: CACHE_KEYS.networks.local() },
+        },
+      )
+        .then(async (r) => {
+          const data = JSON.parse(await r.text());
+          console.log({ data });
+          return data;
+        })
+        .then(allNetworkSchema.parse);
+    } catch (error) {
+      //... do absolutely nothing
+    }
+  }
+  return allNetworkSchema.parse(
+    localChains.concat(integrationList.value as unknown as SingleNetwork[]),
+  );
 });
 
 export const getSingleNetwork = cache(async function getSingleNetwork(
@@ -138,6 +160,6 @@ async function getSingleNetworkFetch(slug: string) {
 }
 
 export const getAllPaidNetworks = cache(async function getAllPaidNetworks() {
-  const allNetworks = getAllNetworks();
+  const allNetworks = await getAllNetworks();
   return allNetworks.filter((network) => network.paidVersion).slice(0, 30);
 });

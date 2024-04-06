@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
-import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
 import { env } from "~/env";
-import type { SingleNetwork } from "~/lib/network";
-import { CACHE_KEYS } from "~/lib/cache-keys";
+import { db } from "~/lib/db";
+import { localChains } from "~/lib/db/schema/local-chains.sql";
+import { eq } from "drizzle-orm";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,15 +23,10 @@ export async function GET(
   }
 
   const slug = ctx.params.slug;
-  const baseURL = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
-  const fsCache = new FileSystemCacheDEV();
-  let data = await fsCache.get<SingleNetwork>(CACHE_KEYS.networks.single(slug));
+  const data = await db
+    .select()
+    .from(localChains)
+    .where(eq(localChains.slug, slug));
 
-  if (data !== null) {
-    data = {
-      ...data,
-      config: { ...data.config, logoUrl: `${baseURL}/${data.config.logoUrl}` },
-    };
-  }
-  return Response.json(data);
+  return Response.json(data[0] ?? null);
 }
