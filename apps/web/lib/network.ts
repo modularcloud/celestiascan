@@ -1,5 +1,5 @@
 import "server-only";
-import { preprocess, z } from "zod";
+import { z } from "zod";
 import { env } from "~/env.js";
 import { CACHE_KEYS } from "./cache-keys";
 import { cache } from "react";
@@ -7,15 +7,7 @@ import { integrations, integrationList } from "~/lib/cache";
 
 export const singleNetworkSchema = z.object({
   config: z.object({
-    logoUrl: preprocess((arg) => {
-      if (typeof arg === "string") {
-        if (!arg.startsWith("http")) {
-          // eslint-disable-next-line turbo/no-undeclared-env-vars
-          return `http://127.0.0.1:${process.env.PORT ?? 3000}${arg}`;
-        }
-      }
-      return arg;
-    }, z.string().url()),
+    logoUrl: z.string(),
     rpcUrls: z.record(
       z.enum(["evm", "cosmos", "svm", "celestia"]),
       z.string().url(),
