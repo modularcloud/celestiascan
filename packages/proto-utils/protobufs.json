@@ -53,6 +53,17 @@
         ["https://github.com/googleapis/googleapis", "."],
         ["https://github.com/cosmos/ics23", "proto"]
       ]
+    },
+    {
+      "name": "wasmd",
+      "main_repo": ["https://github.com/CosmWasm/wasmd", "proto"],
+      "dependencies": [
+        ["https://github.com/CosmWasm/wasmd", "proto"],
+        ["https://github.com/cosmos/cosmos-sdk", "proto"],
+        ["https://github.com/cosmos/gogoproto", "."],
+        ["https://github.com/cosmos/cosmos-proto", "proto"],
+        ["https://github.com/googleapis/googleapis", "."]
+      ]
     }
   ],
   "dymension_hub": [

@@ -100,23 +100,23 @@ import * as _98 from './dymension_hub-out/go-ibc/ibc/core/channel/v1/tx';
 import * as _99 from './dymension_hub-out/go-ibc/ibc/applications/transfer/v1/tx';
 import * as _100 from './dymension_hub-out/go-ibc/ibc/applications/transfer/v1/tx';
 import * as _101 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/host/v1/tx';
-import * as _102 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/controller/v1/tx';
+import * as _102 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/host/v1/tx';
 import * as _103 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/controller/v1/tx';
 import * as _104 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/controller/v1/tx';
-import * as _105 from './dymension_hub-out/go-ibc/ibc/applications/fee/v1/tx';
+import * as _105 from './dymension_hub-out/go-ibc/ibc/applications/interchain_accounts/controller/v1/tx';
 import * as _106 from './dymension_hub-out/go-ibc/ibc/applications/fee/v1/tx';
 import * as _107 from './dymension_hub-out/go-ibc/ibc/applications/fee/v1/tx';
 import * as _108 from './dymension_hub-out/go-ibc/ibc/applications/fee/v1/tx';
-import * as _109 from './dymension_hub-out/dymension/dymension/sequencer/tx';
-import * as _110 from './dymension_hub-out/dymension/dymension/rollapp/tx';
+import * as _109 from './dymension_hub-out/go-ibc/ibc/applications/fee/v1/tx';
+import * as _110 from './dymension_hub-out/dymension/dymension/sequencer/tx';
 import * as _111 from './dymension_hub-out/dymension/dymension/rollapp/tx';
-import * as _112 from './dymension_hub-out/cosmos-sdk/cosmos/vesting/v1beta1/tx';
+import * as _112 from './dymension_hub-out/dymension/dymension/rollapp/tx';
 import * as _113 from './dymension_hub-out/cosmos-sdk/cosmos/vesting/v1beta1/tx';
 import * as _114 from './dymension_hub-out/cosmos-sdk/cosmos/vesting/v1beta1/tx';
-import * as _115 from './dymension_hub-out/cosmos-sdk/cosmos/upgrade/v1beta1/tx';
+import * as _115 from './dymension_hub-out/cosmos-sdk/cosmos/vesting/v1beta1/tx';
 import * as _116 from './dymension_hub-out/cosmos-sdk/cosmos/upgrade/v1beta1/tx';
-import * as _117 from './dymension_hub-out/cosmos-sdk/cosmos/base/abci/v1beta1/abci';
-import * as _118 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
+import * as _117 from './dymension_hub-out/cosmos-sdk/cosmos/upgrade/v1beta1/tx';
+import * as _118 from './dymension_hub-out/cosmos-sdk/cosmos/base/abci/v1beta1/abci';
 import * as _119 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
 import * as _120 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
 import * as _121 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
@@ -124,18 +124,18 @@ import * as _122 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx'
 import * as _123 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
 import * as _124 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
 import * as _125 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
-import * as _126 from './dymension_hub-out/cosmos-sdk/cosmos/slashing/v1beta1/tx';
+import * as _126 from './dymension_hub-out/cosmos-sdk/cosmos/staking/v1beta1/tx';
 import * as _127 from './dymension_hub-out/cosmos-sdk/cosmos/slashing/v1beta1/tx';
-import * as _128 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
+import * as _128 from './dymension_hub-out/cosmos-sdk/cosmos/slashing/v1beta1/tx';
 import * as _129 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
 import * as _130 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
 import * as _131 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
 import * as _132 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
 import * as _133 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
 import * as _134 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
-import * as _135 from './dymension_hub-out/cosmos-sdk/cosmos/nft/v1beta1/tx';
-import * as _136 from './dymension_hub-out/cosmos-sdk/cosmos/mint/v1beta1/tx';
-import * as _137 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
+import * as _135 from './dymension_hub-out/cosmos-sdk/cosmos/protocolpool/v1/tx';
+import * as _136 from './dymension_hub-out/cosmos-sdk/cosmos/nft/v1beta1/tx';
+import * as _137 from './dymension_hub-out/cosmos-sdk/cosmos/mint/v1beta1/tx';
 import * as _138 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _139 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _140 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
@@ -149,11 +149,11 @@ import * as _147 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _148 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _149 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _150 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
-import * as _151 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1beta1/tx';
+import * as _151 from './dymension_hub-out/cosmos-sdk/cosmos/group/v1/tx';
 import * as _152 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1beta1/tx';
 import * as _153 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1beta1/tx';
 import * as _154 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1beta1/tx';
-import * as _155 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
+import * as _155 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1beta1/tx';
 import * as _156 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _157 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _158 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
@@ -163,46 +163,47 @@ import * as _161 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _162 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _163 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _164 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
-import * as _165 from './dymension_hub-out/cosmos-sdk/cosmos/feegrant/v1beta1/tx';
+import * as _165 from './dymension_hub-out/cosmos-sdk/cosmos/gov/v1/tx';
 import * as _166 from './dymension_hub-out/cosmos-sdk/cosmos/feegrant/v1beta1/tx';
 import * as _167 from './dymension_hub-out/cosmos-sdk/cosmos/feegrant/v1beta1/tx';
-import * as _168 from './dymension_hub-out/cosmos-sdk/cosmos/evidence/v1beta1/tx';
-import * as _169 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
+import * as _168 from './dymension_hub-out/cosmos-sdk/cosmos/feegrant/v1beta1/tx';
+import * as _169 from './dymension_hub-out/cosmos-sdk/cosmos/evidence/v1beta1/tx';
 import * as _170 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _171 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _172 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _173 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _174 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _175 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
-import * as _176 from './dymension_hub-out/cosmos-sdk/cosmos/crisis/v1beta1/tx';
+import * as _176 from './dymension_hub-out/cosmos-sdk/cosmos/distribution/v1beta1/tx';
 import * as _177 from './dymension_hub-out/cosmos-sdk/cosmos/crisis/v1beta1/tx';
-import * as _178 from './dymension_hub-out/cosmos-sdk/cosmos/counter/v1/tx';
-import * as _179 from './dymension_hub-out/cosmos-sdk/cosmos/consensus/v1/tx';
-import * as _180 from './dymension_hub-out/cosmos-sdk/cosmos/circuit/v1/tx';
+import * as _178 from './dymension_hub-out/cosmos-sdk/cosmos/crisis/v1beta1/tx';
+import * as _179 from './dymension_hub-out/cosmos-sdk/cosmos/counter/v1/tx';
+import * as _180 from './dymension_hub-out/cosmos-sdk/cosmos/consensus/v1/tx';
 import * as _181 from './dymension_hub-out/cosmos-sdk/cosmos/circuit/v1/tx';
 import * as _182 from './dymension_hub-out/cosmos-sdk/cosmos/circuit/v1/tx';
-import * as _183 from './dymension_hub-out/cosmos-sdk/cosmos/base/reflection/v2alpha1/reflection';
-import * as _184 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
+import * as _183 from './dymension_hub-out/cosmos-sdk/cosmos/circuit/v1/tx';
+import * as _184 from './dymension_hub-out/cosmos-sdk/cosmos/base/reflection/v2alpha1/reflection';
 import * as _185 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
 import * as _186 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
 import * as _187 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
 import * as _188 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
-import * as _189 from './dymension_hub-out/cosmos-sdk/cosmos/authz/v1beta1/tx';
+import * as _189 from './dymension_hub-out/cosmos-sdk/cosmos/bank/v1beta1/tx';
 import * as _190 from './dymension_hub-out/cosmos-sdk/cosmos/authz/v1beta1/tx';
 import * as _191 from './dymension_hub-out/cosmos-sdk/cosmos/authz/v1beta1/tx';
 import * as _192 from './dymension_hub-out/cosmos-sdk/cosmos/authz/v1beta1/tx';
-import * as _193 from './dymension_hub-out/cosmos-sdk/cosmos/auth/v1beta1/tx';
-import * as _194 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/v1/tx';
+import * as _193 from './dymension_hub-out/cosmos-sdk/cosmos/authz/v1beta1/tx';
+import * as _194 from './dymension_hub-out/cosmos-sdk/cosmos/auth/v1beta1/tx';
 import * as _195 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/v1/tx';
 import * as _196 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/v1/tx';
-import * as _197 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/rotation/v1/partial';
+import * as _197 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/v1/tx';
 import * as _198 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/rotation/v1/partial';
-import * as _199 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/counter/v1/counter';
+import * as _199 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/rotation/v1/partial';
 import * as _200 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/counter/v1/counter';
 import * as _201 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/counter/v1/counter';
-import * as _202 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/interfaces/account_abstraction/v1/interface';
+import * as _202 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/testing/counter/v1/counter';
 import * as _203 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/interfaces/account_abstraction/v1/interface';
 import * as _204 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/interfaces/account_abstraction/v1/interface';
+import * as _205 from './dymension_hub-out/cosmos-sdk/cosmos/accounts/interfaces/account_abstraction/v1/interface';
 
 export type MsgType =   | { parser: typeof _0.MsgSetValidatorSetPreference, typeUrl: '/osmosis.valsetpref.v1beta1.MsgSetValidatorSetPreference' }
   | { parser: typeof _1.MsgDelegateToValidatorSet, typeUrl: '/osmosis.valsetpref.v1beta1.MsgDelegateToValidatorSet' }
@@ -306,109 +307,110 @@ export type MsgType =   | { parser: typeof _0.MsgSetValidatorSetPreference, type
   | { parser: typeof _99.MsgTransfer, typeUrl: '/ibc.applications.transfer.v1.MsgTransfer' }
   | { parser: typeof _100.MsgUpdateParams, typeUrl: '/ibc.applications.transfer.v1.MsgUpdateParams' }
   | { parser: typeof _101.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.host.v1.MsgUpdateParams' }
-  | { parser: typeof _102.MsgRegisterInterchainAccount, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount' }
-  | { parser: typeof _103.MsgSendTx, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgSendTx' }
-  | { parser: typeof _104.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams' }
-  | { parser: typeof _105.MsgRegisterPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterPayee' }
-  | { parser: typeof _106.MsgRegisterCounterpartyPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyPayee' }
-  | { parser: typeof _107.MsgPayPacketFee, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee' }
-  | { parser: typeof _108.MsgPayPacketFeeAsync, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync' }
-  | { parser: typeof _109.MsgCreateSequencer, typeUrl: '/dymensionxyz.dymension.sequencer.MsgCreateSequencer' }
-  | { parser: typeof _110.MsgCreateRollapp, typeUrl: '/dymensionxyz.dymension.rollapp.MsgCreateRollapp' }
-  | { parser: typeof _111.MsgUpdateState, typeUrl: '/dymensionxyz.dymension.rollapp.MsgUpdateState' }
-  | { parser: typeof _112.MsgCreateVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreateVestingAccount' }
-  | { parser: typeof _113.MsgCreatePermanentLockedAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount' }
-  | { parser: typeof _114.MsgCreatePeriodicVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount' }
-  | { parser: typeof _115.MsgSoftwareUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade' }
-  | { parser: typeof _116.MsgCancelUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgCancelUpgrade' }
-  | { parser: typeof _117.MsgData, typeUrl: '/cosmos.base.abci.v1beta1.MsgData' }
-  | { parser: typeof _118.MsgCreateValidator, typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator' }
-  | { parser: typeof _119.MsgEditValidator, typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator' }
-  | { parser: typeof _120.MsgDelegate, typeUrl: '/cosmos.staking.v1beta1.MsgDelegate' }
-  | { parser: typeof _121.MsgBeginRedelegate, typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate' }
-  | { parser: typeof _122.MsgUndelegate, typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate' }
-  | { parser: typeof _123.MsgCancelUnbondingDelegation, typeUrl: '/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation' }
-  | { parser: typeof _124.MsgUpdateParams, typeUrl: '/cosmos.staking.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _125.MsgRotateConsPubKey, typeUrl: '/cosmos.staking.v1beta1.MsgRotateConsPubKey' }
-  | { parser: typeof _126.MsgUnjail, typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail' }
-  | { parser: typeof _127.MsgUpdateParams, typeUrl: '/cosmos.slashing.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _128.MsgFundCommunityPool, typeUrl: '/cosmos.protocolpool.v1.MsgFundCommunityPool' }
-  | { parser: typeof _129.MsgCommunityPoolSpend, typeUrl: '/cosmos.protocolpool.v1.MsgCommunityPoolSpend' }
-  | { parser: typeof _130.MsgSubmitBudgetProposal, typeUrl: '/cosmos.protocolpool.v1.MsgSubmitBudgetProposal' }
-  | { parser: typeof _131.MsgClaimBudget, typeUrl: '/cosmos.protocolpool.v1.MsgClaimBudget' }
-  | { parser: typeof _132.MsgCreateContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCreateContinuousFund' }
-  | { parser: typeof _133.MsgCancelContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCancelContinuousFund' }
-  | { parser: typeof _134.MsgWithdrawContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgWithdrawContinuousFund' }
-  | { parser: typeof _135.MsgSend, typeUrl: '/cosmos.nft.v1beta1.MsgSend' }
-  | { parser: typeof _136.MsgUpdateParams, typeUrl: '/cosmos.mint.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _137.MsgCreateGroup, typeUrl: '/cosmos.group.v1.MsgCreateGroup' }
-  | { parser: typeof _138.MsgUpdateGroupMembers, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers' }
-  | { parser: typeof _139.MsgUpdateGroupAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupAdmin' }
-  | { parser: typeof _140.MsgUpdateGroupMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata' }
-  | { parser: typeof _141.MsgCreateGroupPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupPolicy' }
-  | { parser: typeof _142.MsgUpdateGroupPolicyAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyAdmin' }
-  | { parser: typeof _143.MsgCreateGroupWithPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupWithPolicy' }
-  | { parser: typeof _144.MsgUpdateGroupPolicyDecisionPolicy, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy' }
-  | { parser: typeof _145.MsgUpdateGroupPolicyMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyMetadata' }
-  | { parser: typeof _146.MsgSubmitProposal, typeUrl: '/cosmos.group.v1.MsgSubmitProposal' }
-  | { parser: typeof _147.MsgWithdrawProposal, typeUrl: '/cosmos.group.v1.MsgWithdrawProposal' }
-  | { parser: typeof _148.MsgVote, typeUrl: '/cosmos.group.v1.MsgVote' }
-  | { parser: typeof _149.MsgExec, typeUrl: '/cosmos.group.v1.MsgExec' }
-  | { parser: typeof _150.MsgLeaveGroup, typeUrl: '/cosmos.group.v1.MsgLeaveGroup' }
-  | { parser: typeof _151.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal' }
-  | { parser: typeof _152.MsgVote, typeUrl: '/cosmos.gov.v1beta1.MsgVote' }
-  | { parser: typeof _153.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted' }
-  | { parser: typeof _154.MsgDeposit, typeUrl: '/cosmos.gov.v1beta1.MsgDeposit' }
-  | { parser: typeof _155.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitProposal' }
-  | { parser: typeof _156.MsgExecLegacyContent, typeUrl: '/cosmos.gov.v1.MsgExecLegacyContent' }
-  | { parser: typeof _157.MsgVote, typeUrl: '/cosmos.gov.v1.MsgVote' }
-  | { parser: typeof _158.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1.MsgVoteWeighted' }
-  | { parser: typeof _159.MsgDeposit, typeUrl: '/cosmos.gov.v1.MsgDeposit' }
-  | { parser: typeof _160.MsgUpdateParams, typeUrl: '/cosmos.gov.v1.MsgUpdateParams' }
-  | { parser: typeof _161.MsgCancelProposal, typeUrl: '/cosmos.gov.v1.MsgCancelProposal' }
-  | { parser: typeof _162.MsgSubmitMultipleChoiceProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitMultipleChoiceProposal' }
-  | { parser: typeof _163.MsgUpdateMessageParams, typeUrl: '/cosmos.gov.v1.MsgUpdateMessageParams' }
-  | { parser: typeof _164.MsgSudoExec, typeUrl: '/cosmos.gov.v1.MsgSudoExec' }
-  | { parser: typeof _165.MsgGrantAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance' }
-  | { parser: typeof _166.MsgRevokeAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance' }
-  | { parser: typeof _167.MsgPruneAllowances, typeUrl: '/cosmos.feegrant.v1beta1.MsgPruneAllowances' }
-  | { parser: typeof _168.MsgSubmitEvidence, typeUrl: '/cosmos.evidence.v1beta1.MsgSubmitEvidence' }
-  | { parser: typeof _169.MsgSetWithdrawAddress, typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress' }
-  | { parser: typeof _170.MsgWithdrawDelegatorReward, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' }
-  | { parser: typeof _171.MsgWithdrawValidatorCommission, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission' }
-  | { parser: typeof _172.MsgFundCommunityPool, typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool' }
-  | { parser: typeof _173.MsgUpdateParams, typeUrl: '/cosmos.distribution.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _174.MsgCommunityPoolSpend, typeUrl: '/cosmos.distribution.v1beta1.MsgCommunityPoolSpend' }
-  | { parser: typeof _175.MsgDepositValidatorRewardsPool, typeUrl: '/cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool' }
-  | { parser: typeof _176.MsgVerifyInvariant, typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant' }
-  | { parser: typeof _177.MsgUpdateParams, typeUrl: '/cosmos.crisis.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _178.MsgIncreaseCounter, typeUrl: '/cosmos.counter.v1.MsgIncreaseCounter' }
-  | { parser: typeof _179.MsgUpdateParams, typeUrl: '/cosmos.consensus.v1.MsgUpdateParams' }
-  | { parser: typeof _180.MsgAuthorizeCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgAuthorizeCircuitBreaker' }
-  | { parser: typeof _181.MsgTripCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgTripCircuitBreaker' }
-  | { parser: typeof _182.MsgResetCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgResetCircuitBreaker' }
-  | { parser: typeof _183.MsgDescriptor, typeUrl: '/cosmos.base.reflection.v2alpha1.MsgDescriptor' }
-  | { parser: typeof _184.MsgSend, typeUrl: '/cosmos.bank.v1beta1.MsgSend' }
-  | { parser: typeof _185.MsgMultiSend, typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend' }
-  | { parser: typeof _186.MsgUpdateParams, typeUrl: '/cosmos.bank.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _187.MsgSetSendEnabled, typeUrl: '/cosmos.bank.v1beta1.MsgSetSendEnabled' }
-  | { parser: typeof _188.MsgBurn, typeUrl: '/cosmos.bank.v1beta1.MsgBurn' }
-  | { parser: typeof _189.MsgGrant, typeUrl: '/cosmos.authz.v1beta1.MsgGrant' }
-  | { parser: typeof _190.MsgExec, typeUrl: '/cosmos.authz.v1beta1.MsgExec' }
-  | { parser: typeof _191.MsgRevoke, typeUrl: '/cosmos.authz.v1beta1.MsgRevoke' }
-  | { parser: typeof _192.MsgPruneExpiredGrants, typeUrl: '/cosmos.authz.v1beta1.MsgPruneExpiredGrants' }
-  | { parser: typeof _193.MsgUpdateParams, typeUrl: '/cosmos.auth.v1beta1.MsgUpdateParams' }
-  | { parser: typeof _194.MsgInit, typeUrl: '/cosmos.accounts.v1.MsgInit' }
-  | { parser: typeof _195.MsgExecute, typeUrl: '/cosmos.accounts.v1.MsgExecute' }
-  | { parser: typeof _196.MsgExecuteBundle, typeUrl: '/cosmos.accounts.v1.MsgExecuteBundle' }
-  | { parser: typeof _197.MsgInit, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgInit' }
-  | { parser: typeof _198.MsgRotatePubKey, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgRotatePubKey' }
-  | { parser: typeof _199.MsgInit, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgInit' }
-  | { parser: typeof _200.MsgIncreaseCounter, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgIncreaseCounter' }
-  | { parser: typeof _201.MsgTestDependencies, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgTestDependencies' }
-  | { parser: typeof _202.MsgAuthenticate, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgAuthenticate' }
-  | { parser: typeof _203.MsgPayBundler, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgPayBundler' }
-  | { parser: typeof _204.MsgExecute, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgExecute' };
+  | { parser: typeof _102.MsgModuleQuerySafe, typeUrl: '/ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafe' }
+  | { parser: typeof _103.MsgRegisterInterchainAccount, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount' }
+  | { parser: typeof _104.MsgSendTx, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgSendTx' }
+  | { parser: typeof _105.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams' }
+  | { parser: typeof _106.MsgRegisterPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterPayee' }
+  | { parser: typeof _107.MsgRegisterCounterpartyPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyPayee' }
+  | { parser: typeof _108.MsgPayPacketFee, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee' }
+  | { parser: typeof _109.MsgPayPacketFeeAsync, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync' }
+  | { parser: typeof _110.MsgCreateSequencer, typeUrl: '/dymensionxyz.dymension.sequencer.MsgCreateSequencer' }
+  | { parser: typeof _111.MsgCreateRollapp, typeUrl: '/dymensionxyz.dymension.rollapp.MsgCreateRollapp' }
+  | { parser: typeof _112.MsgUpdateState, typeUrl: '/dymensionxyz.dymension.rollapp.MsgUpdateState' }
+  | { parser: typeof _113.MsgCreateVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreateVestingAccount' }
+  | { parser: typeof _114.MsgCreatePermanentLockedAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount' }
+  | { parser: typeof _115.MsgCreatePeriodicVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount' }
+  | { parser: typeof _116.MsgSoftwareUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade' }
+  | { parser: typeof _117.MsgCancelUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgCancelUpgrade' }
+  | { parser: typeof _118.MsgData, typeUrl: '/cosmos.base.abci.v1beta1.MsgData' }
+  | { parser: typeof _119.MsgCreateValidator, typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator' }
+  | { parser: typeof _120.MsgEditValidator, typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator' }
+  | { parser: typeof _121.MsgDelegate, typeUrl: '/cosmos.staking.v1beta1.MsgDelegate' }
+  | { parser: typeof _122.MsgBeginRedelegate, typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate' }
+  | { parser: typeof _123.MsgUndelegate, typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate' }
+  | { parser: typeof _124.MsgCancelUnbondingDelegation, typeUrl: '/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation' }
+  | { parser: typeof _125.MsgUpdateParams, typeUrl: '/cosmos.staking.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _126.MsgRotateConsPubKey, typeUrl: '/cosmos.staking.v1beta1.MsgRotateConsPubKey' }
+  | { parser: typeof _127.MsgUnjail, typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail' }
+  | { parser: typeof _128.MsgUpdateParams, typeUrl: '/cosmos.slashing.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _129.MsgFundCommunityPool, typeUrl: '/cosmos.protocolpool.v1.MsgFundCommunityPool' }
+  | { parser: typeof _130.MsgCommunityPoolSpend, typeUrl: '/cosmos.protocolpool.v1.MsgCommunityPoolSpend' }
+  | { parser: typeof _131.MsgSubmitBudgetProposal, typeUrl: '/cosmos.protocolpool.v1.MsgSubmitBudgetProposal' }
+  | { parser: typeof _132.MsgClaimBudget, typeUrl: '/cosmos.protocolpool.v1.MsgClaimBudget' }
+  | { parser: typeof _133.MsgCreateContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCreateContinuousFund' }
+  | { parser: typeof _134.MsgCancelContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCancelContinuousFund' }
+  | { parser: typeof _135.MsgWithdrawContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgWithdrawContinuousFund' }
+  | { parser: typeof _136.MsgSend, typeUrl: '/cosmos.nft.v1beta1.MsgSend' }
+  | { parser: typeof _137.MsgUpdateParams, typeUrl: '/cosmos.mint.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _138.MsgCreateGroup, typeUrl: '/cosmos.group.v1.MsgCreateGroup' }
+  | { parser: typeof _139.MsgUpdateGroupMembers, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers' }
+  | { parser: typeof _140.MsgUpdateGroupAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupAdmin' }
+  | { parser: typeof _141.MsgUpdateGroupMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata' }
+  | { parser: typeof _142.MsgCreateGroupPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupPolicy' }
+  | { parser: typeof _143.MsgUpdateGroupPolicyAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyAdmin' }
+  | { parser: typeof _144.MsgCreateGroupWithPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupWithPolicy' }
+  | { parser: typeof _145.MsgUpdateGroupPolicyDecisionPolicy, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy' }
+  | { parser: typeof _146.MsgUpdateGroupPolicyMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyMetadata' }
+  | { parser: typeof _147.MsgSubmitProposal, typeUrl: '/cosmos.group.v1.MsgSubmitProposal' }
+  | { parser: typeof _148.MsgWithdrawProposal, typeUrl: '/cosmos.group.v1.MsgWithdrawProposal' }
+  | { parser: typeof _149.MsgVote, typeUrl: '/cosmos.group.v1.MsgVote' }
+  | { parser: typeof _150.MsgExec, typeUrl: '/cosmos.group.v1.MsgExec' }
+  | { parser: typeof _151.MsgLeaveGroup, typeUrl: '/cosmos.group.v1.MsgLeaveGroup' }
+  | { parser: typeof _152.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal' }
+  | { parser: typeof _153.MsgVote, typeUrl: '/cosmos.gov.v1beta1.MsgVote' }
+  | { parser: typeof _154.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted' }
+  | { parser: typeof _155.MsgDeposit, typeUrl: '/cosmos.gov.v1beta1.MsgDeposit' }
+  | { parser: typeof _156.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitProposal' }
+  | { parser: typeof _157.MsgExecLegacyContent, typeUrl: '/cosmos.gov.v1.MsgExecLegacyContent' }
+  | { parser: typeof _158.MsgVote, typeUrl: '/cosmos.gov.v1.MsgVote' }
+  | { parser: typeof _159.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1.MsgVoteWeighted' }
+  | { parser: typeof _160.MsgDeposit, typeUrl: '/cosmos.gov.v1.MsgDeposit' }
+  | { parser: typeof _161.MsgUpdateParams, typeUrl: '/cosmos.gov.v1.MsgUpdateParams' }
+  | { parser: typeof _162.MsgCancelProposal, typeUrl: '/cosmos.gov.v1.MsgCancelProposal' }
+  | { parser: typeof _163.MsgSubmitMultipleChoiceProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitMultipleChoiceProposal' }
+  | { parser: typeof _164.MsgUpdateMessageParams, typeUrl: '/cosmos.gov.v1.MsgUpdateMessageParams' }
+  | { parser: typeof _165.MsgSudoExec, typeUrl: '/cosmos.gov.v1.MsgSudoExec' }
+  | { parser: typeof _166.MsgGrantAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance' }
+  | { parser: typeof _167.MsgRevokeAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance' }
+  | { parser: typeof _168.MsgPruneAllowances, typeUrl: '/cosmos.feegrant.v1beta1.MsgPruneAllowances' }
+  | { parser: typeof _169.MsgSubmitEvidence, typeUrl: '/cosmos.evidence.v1beta1.MsgSubmitEvidence' }
+  | { parser: typeof _170.MsgSetWithdrawAddress, typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress' }
+  | { parser: typeof _171.MsgWithdrawDelegatorReward, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' }
+  | { parser: typeof _172.MsgWithdrawValidatorCommission, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission' }
+  | { parser: typeof _173.MsgFundCommunityPool, typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool' }
+  | { parser: typeof _174.MsgUpdateParams, typeUrl: '/cosmos.distribution.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _175.MsgCommunityPoolSpend, typeUrl: '/cosmos.distribution.v1beta1.MsgCommunityPoolSpend' }
+  | { parser: typeof _176.MsgDepositValidatorRewardsPool, typeUrl: '/cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool' }
+  | { parser: typeof _177.MsgVerifyInvariant, typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant' }
+  | { parser: typeof _178.MsgUpdateParams, typeUrl: '/cosmos.crisis.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _179.MsgIncreaseCounter, typeUrl: '/cosmos.counter.v1.MsgIncreaseCounter' }
+  | { parser: typeof _180.MsgUpdateParams, typeUrl: '/cosmos.consensus.v1.MsgUpdateParams' }
+  | { parser: typeof _181.MsgAuthorizeCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgAuthorizeCircuitBreaker' }
+  | { parser: typeof _182.MsgTripCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgTripCircuitBreaker' }
+  | { parser: typeof _183.MsgResetCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgResetCircuitBreaker' }
+  | { parser: typeof _184.MsgDescriptor, typeUrl: '/cosmos.base.reflection.v2alpha1.MsgDescriptor' }
+  | { parser: typeof _185.MsgSend, typeUrl: '/cosmos.bank.v1beta1.MsgSend' }
+  | { parser: typeof _186.MsgMultiSend, typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend' }
+  | { parser: typeof _187.MsgUpdateParams, typeUrl: '/cosmos.bank.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _188.MsgSetSendEnabled, typeUrl: '/cosmos.bank.v1beta1.MsgSetSendEnabled' }
+  | { parser: typeof _189.MsgBurn, typeUrl: '/cosmos.bank.v1beta1.MsgBurn' }
+  | { parser: typeof _190.MsgGrant, typeUrl: '/cosmos.authz.v1beta1.MsgGrant' }
+  | { parser: typeof _191.MsgExec, typeUrl: '/cosmos.authz.v1beta1.MsgExec' }
+  | { parser: typeof _192.MsgRevoke, typeUrl: '/cosmos.authz.v1beta1.MsgRevoke' }
+  | { parser: typeof _193.MsgPruneExpiredGrants, typeUrl: '/cosmos.authz.v1beta1.MsgPruneExpiredGrants' }
+  | { parser: typeof _194.MsgUpdateParams, typeUrl: '/cosmos.auth.v1beta1.MsgUpdateParams' }
+  | { parser: typeof _195.MsgInit, typeUrl: '/cosmos.accounts.v1.MsgInit' }
+  | { parser: typeof _196.MsgExecute, typeUrl: '/cosmos.accounts.v1.MsgExecute' }
+  | { parser: typeof _197.MsgExecuteBundle, typeUrl: '/cosmos.accounts.v1.MsgExecuteBundle' }
+  | { parser: typeof _198.MsgInit, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgInit' }
+  | { parser: typeof _199.MsgRotatePubKey, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgRotatePubKey' }
+  | { parser: typeof _200.MsgInit, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgInit' }
+  | { parser: typeof _201.MsgIncreaseCounter, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgIncreaseCounter' }
+  | { parser: typeof _202.MsgTestDependencies, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgTestDependencies' }
+  | { parser: typeof _203.MsgAuthenticate, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgAuthenticate' }
+  | { parser: typeof _204.MsgPayBundler, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgPayBundler' }
+  | { parser: typeof _205.MsgExecute, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgExecute' };
 export const Msgs: MsgType[] = [
   { parser: _0.MsgSetValidatorSetPreference, typeUrl: '/osmosis.valsetpref.v1beta1.MsgSetValidatorSetPreference' },
   { parser: _1.MsgDelegateToValidatorSet, typeUrl: '/osmosis.valsetpref.v1beta1.MsgDelegateToValidatorSet' },
@@ -512,107 +514,108 @@ export const Msgs: MsgType[] = [
   { parser: _99.MsgTransfer, typeUrl: '/ibc.applications.transfer.v1.MsgTransfer' },
   { parser: _100.MsgUpdateParams, typeUrl: '/ibc.applications.transfer.v1.MsgUpdateParams' },
   { parser: _101.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.host.v1.MsgUpdateParams' },
-  { parser: _102.MsgRegisterInterchainAccount, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount' },
-  { parser: _103.MsgSendTx, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgSendTx' },
-  { parser: _104.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams' },
-  { parser: _105.MsgRegisterPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterPayee' },
-  { parser: _106.MsgRegisterCounterpartyPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyPayee' },
-  { parser: _107.MsgPayPacketFee, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee' },
-  { parser: _108.MsgPayPacketFeeAsync, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync' },
-  { parser: _109.MsgCreateSequencer, typeUrl: '/dymensionxyz.dymension.sequencer.MsgCreateSequencer' },
-  { parser: _110.MsgCreateRollapp, typeUrl: '/dymensionxyz.dymension.rollapp.MsgCreateRollapp' },
-  { parser: _111.MsgUpdateState, typeUrl: '/dymensionxyz.dymension.rollapp.MsgUpdateState' },
-  { parser: _112.MsgCreateVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreateVestingAccount' },
-  { parser: _113.MsgCreatePermanentLockedAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount' },
-  { parser: _114.MsgCreatePeriodicVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount' },
-  { parser: _115.MsgSoftwareUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade' },
-  { parser: _116.MsgCancelUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgCancelUpgrade' },
-  { parser: _117.MsgData, typeUrl: '/cosmos.base.abci.v1beta1.MsgData' },
-  { parser: _118.MsgCreateValidator, typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator' },
-  { parser: _119.MsgEditValidator, typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator' },
-  { parser: _120.MsgDelegate, typeUrl: '/cosmos.staking.v1beta1.MsgDelegate' },
-  { parser: _121.MsgBeginRedelegate, typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate' },
-  { parser: _122.MsgUndelegate, typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate' },
-  { parser: _123.MsgCancelUnbondingDelegation, typeUrl: '/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation' },
-  { parser: _124.MsgUpdateParams, typeUrl: '/cosmos.staking.v1beta1.MsgUpdateParams' },
-  { parser: _125.MsgRotateConsPubKey, typeUrl: '/cosmos.staking.v1beta1.MsgRotateConsPubKey' },
-  { parser: _126.MsgUnjail, typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail' },
-  { parser: _127.MsgUpdateParams, typeUrl: '/cosmos.slashing.v1beta1.MsgUpdateParams' },
-  { parser: _128.MsgFundCommunityPool, typeUrl: '/cosmos.protocolpool.v1.MsgFundCommunityPool' },
-  { parser: _129.MsgCommunityPoolSpend, typeUrl: '/cosmos.protocolpool.v1.MsgCommunityPoolSpend' },
-  { parser: _130.MsgSubmitBudgetProposal, typeUrl: '/cosmos.protocolpool.v1.MsgSubmitBudgetProposal' },
-  { parser: _131.MsgClaimBudget, typeUrl: '/cosmos.protocolpool.v1.MsgClaimBudget' },
-  { parser: _132.MsgCreateContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCreateContinuousFund' },
-  { parser: _133.MsgCancelContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCancelContinuousFund' },
-  { parser: _134.MsgWithdrawContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgWithdrawContinuousFund' },
-  { parser: _135.MsgSend, typeUrl: '/cosmos.nft.v1beta1.MsgSend' },
-  { parser: _136.MsgUpdateParams, typeUrl: '/cosmos.mint.v1beta1.MsgUpdateParams' },
-  { parser: _137.MsgCreateGroup, typeUrl: '/cosmos.group.v1.MsgCreateGroup' },
-  { parser: _138.MsgUpdateGroupMembers, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers' },
-  { parser: _139.MsgUpdateGroupAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupAdmin' },
-  { parser: _140.MsgUpdateGroupMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata' },
-  { parser: _141.MsgCreateGroupPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupPolicy' },
-  { parser: _142.MsgUpdateGroupPolicyAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyAdmin' },
-  { parser: _143.MsgCreateGroupWithPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupWithPolicy' },
-  { parser: _144.MsgUpdateGroupPolicyDecisionPolicy, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy' },
-  { parser: _145.MsgUpdateGroupPolicyMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyMetadata' },
-  { parser: _146.MsgSubmitProposal, typeUrl: '/cosmos.group.v1.MsgSubmitProposal' },
-  { parser: _147.MsgWithdrawProposal, typeUrl: '/cosmos.group.v1.MsgWithdrawProposal' },
-  { parser: _148.MsgVote, typeUrl: '/cosmos.group.v1.MsgVote' },
-  { parser: _149.MsgExec, typeUrl: '/cosmos.group.v1.MsgExec' },
-  { parser: _150.MsgLeaveGroup, typeUrl: '/cosmos.group.v1.MsgLeaveGroup' },
-  { parser: _151.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal' },
-  { parser: _152.MsgVote, typeUrl: '/cosmos.gov.v1beta1.MsgVote' },
-  { parser: _153.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted' },
-  { parser: _154.MsgDeposit, typeUrl: '/cosmos.gov.v1beta1.MsgDeposit' },
-  { parser: _155.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitProposal' },
-  { parser: _156.MsgExecLegacyContent, typeUrl: '/cosmos.gov.v1.MsgExecLegacyContent' },
-  { parser: _157.MsgVote, typeUrl: '/cosmos.gov.v1.MsgVote' },
-  { parser: _158.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1.MsgVoteWeighted' },
-  { parser: _159.MsgDeposit, typeUrl: '/cosmos.gov.v1.MsgDeposit' },
-  { parser: _160.MsgUpdateParams, typeUrl: '/cosmos.gov.v1.MsgUpdateParams' },
-  { parser: _161.MsgCancelProposal, typeUrl: '/cosmos.gov.v1.MsgCancelProposal' },
-  { parser: _162.MsgSubmitMultipleChoiceProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitMultipleChoiceProposal' },
-  { parser: _163.MsgUpdateMessageParams, typeUrl: '/cosmos.gov.v1.MsgUpdateMessageParams' },
-  { parser: _164.MsgSudoExec, typeUrl: '/cosmos.gov.v1.MsgSudoExec' },
-  { parser: _165.MsgGrantAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance' },
-  { parser: _166.MsgRevokeAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance' },
-  { parser: _167.MsgPruneAllowances, typeUrl: '/cosmos.feegrant.v1beta1.MsgPruneAllowances' },
-  { parser: _168.MsgSubmitEvidence, typeUrl: '/cosmos.evidence.v1beta1.MsgSubmitEvidence' },
-  { parser: _169.MsgSetWithdrawAddress, typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress' },
-  { parser: _170.MsgWithdrawDelegatorReward, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' },
-  { parser: _171.MsgWithdrawValidatorCommission, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission' },
-  { parser: _172.MsgFundCommunityPool, typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool' },
-  { parser: _173.MsgUpdateParams, typeUrl: '/cosmos.distribution.v1beta1.MsgUpdateParams' },
-  { parser: _174.MsgCommunityPoolSpend, typeUrl: '/cosmos.distribution.v1beta1.MsgCommunityPoolSpend' },
-  { parser: _175.MsgDepositValidatorRewardsPool, typeUrl: '/cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool' },
-  { parser: _176.MsgVerifyInvariant, typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant' },
-  { parser: _177.MsgUpdateParams, typeUrl: '/cosmos.crisis.v1beta1.MsgUpdateParams' },
-  { parser: _178.MsgIncreaseCounter, typeUrl: '/cosmos.counter.v1.MsgIncreaseCounter' },
-  { parser: _179.MsgUpdateParams, typeUrl: '/cosmos.consensus.v1.MsgUpdateParams' },
-  { parser: _180.MsgAuthorizeCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgAuthorizeCircuitBreaker' },
-  { parser: _181.MsgTripCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgTripCircuitBreaker' },
-  { parser: _182.MsgResetCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgResetCircuitBreaker' },
-  { parser: _183.MsgDescriptor, typeUrl: '/cosmos.base.reflection.v2alpha1.MsgDescriptor' },
-  { parser: _184.MsgSend, typeUrl: '/cosmos.bank.v1beta1.MsgSend' },
-  { parser: _185.MsgMultiSend, typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend' },
-  { parser: _186.MsgUpdateParams, typeUrl: '/cosmos.bank.v1beta1.MsgUpdateParams' },
-  { parser: _187.MsgSetSendEnabled, typeUrl: '/cosmos.bank.v1beta1.MsgSetSendEnabled' },
-  { parser: _188.MsgBurn, typeUrl: '/cosmos.bank.v1beta1.MsgBurn' },
-  { parser: _189.MsgGrant, typeUrl: '/cosmos.authz.v1beta1.MsgGrant' },
-  { parser: _190.MsgExec, typeUrl: '/cosmos.authz.v1beta1.MsgExec' },
-  { parser: _191.MsgRevoke, typeUrl: '/cosmos.authz.v1beta1.MsgRevoke' },
-  { parser: _192.MsgPruneExpiredGrants, typeUrl: '/cosmos.authz.v1beta1.MsgPruneExpiredGrants' },
-  { parser: _193.MsgUpdateParams, typeUrl: '/cosmos.auth.v1beta1.MsgUpdateParams' },
-  { parser: _194.MsgInit, typeUrl: '/cosmos.accounts.v1.MsgInit' },
-  { parser: _195.MsgExecute, typeUrl: '/cosmos.accounts.v1.MsgExecute' },
-  { parser: _196.MsgExecuteBundle, typeUrl: '/cosmos.accounts.v1.MsgExecuteBundle' },
-  { parser: _197.MsgInit, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgInit' },
-  { parser: _198.MsgRotatePubKey, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgRotatePubKey' },
-  { parser: _199.MsgInit, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgInit' },
-  { parser: _200.MsgIncreaseCounter, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgIncreaseCounter' },
-  { parser: _201.MsgTestDependencies, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgTestDependencies' },
-  { parser: _202.MsgAuthenticate, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgAuthenticate' },
-  { parser: _203.MsgPayBundler, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgPayBundler' },
-  { parser: _204.MsgExecute, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgExecute' },
+  { parser: _102.MsgModuleQuerySafe, typeUrl: '/ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafe' },
+  { parser: _103.MsgRegisterInterchainAccount, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount' },
+  { parser: _104.MsgSendTx, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgSendTx' },
+  { parser: _105.MsgUpdateParams, typeUrl: '/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams' },
+  { parser: _106.MsgRegisterPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterPayee' },
+  { parser: _107.MsgRegisterCounterpartyPayee, typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyPayee' },
+  { parser: _108.MsgPayPacketFee, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee' },
+  { parser: _109.MsgPayPacketFeeAsync, typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync' },
+  { parser: _110.MsgCreateSequencer, typeUrl: '/dymensionxyz.dymension.sequencer.MsgCreateSequencer' },
+  { parser: _111.MsgCreateRollapp, typeUrl: '/dymensionxyz.dymension.rollapp.MsgCreateRollapp' },
+  { parser: _112.MsgUpdateState, typeUrl: '/dymensionxyz.dymension.rollapp.MsgUpdateState' },
+  { parser: _113.MsgCreateVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreateVestingAccount' },
+  { parser: _114.MsgCreatePermanentLockedAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount' },
+  { parser: _115.MsgCreatePeriodicVestingAccount, typeUrl: '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount' },
+  { parser: _116.MsgSoftwareUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade' },
+  { parser: _117.MsgCancelUpgrade, typeUrl: '/cosmos.upgrade.v1beta1.MsgCancelUpgrade' },
+  { parser: _118.MsgData, typeUrl: '/cosmos.base.abci.v1beta1.MsgData' },
+  { parser: _119.MsgCreateValidator, typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator' },
+  { parser: _120.MsgEditValidator, typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator' },
+  { parser: _121.MsgDelegate, typeUrl: '/cosmos.staking.v1beta1.MsgDelegate' },
+  { parser: _122.MsgBeginRedelegate, typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate' },
+  { parser: _123.MsgUndelegate, typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate' },
+  { parser: _124.MsgCancelUnbondingDelegation, typeUrl: '/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation' },
+  { parser: _125.MsgUpdateParams, typeUrl: '/cosmos.staking.v1beta1.MsgUpdateParams' },
+  { parser: _126.MsgRotateConsPubKey, typeUrl: '/cosmos.staking.v1beta1.MsgRotateConsPubKey' },
+  { parser: _127.MsgUnjail, typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail' },
+  { parser: _128.MsgUpdateParams, typeUrl: '/cosmos.slashing.v1beta1.MsgUpdateParams' },
+  { parser: _129.MsgFundCommunityPool, typeUrl: '/cosmos.protocolpool.v1.MsgFundCommunityPool' },
+  { parser: _130.MsgCommunityPoolSpend, typeUrl: '/cosmos.protocolpool.v1.MsgCommunityPoolSpend' },
+  { parser: _131.MsgSubmitBudgetProposal, typeUrl: '/cosmos.protocolpool.v1.MsgSubmitBudgetProposal' },
+  { parser: _132.MsgClaimBudget, typeUrl: '/cosmos.protocolpool.v1.MsgClaimBudget' },
+  { parser: _133.MsgCreateContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCreateContinuousFund' },
+  { parser: _134.MsgCancelContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgCancelContinuousFund' },
+  { parser: _135.MsgWithdrawContinuousFund, typeUrl: '/cosmos.protocolpool.v1.MsgWithdrawContinuousFund' },
+  { parser: _136.MsgSend, typeUrl: '/cosmos.nft.v1beta1.MsgSend' },
+  { parser: _137.MsgUpdateParams, typeUrl: '/cosmos.mint.v1beta1.MsgUpdateParams' },
+  { parser: _138.MsgCreateGroup, typeUrl: '/cosmos.group.v1.MsgCreateGroup' },
+  { parser: _139.MsgUpdateGroupMembers, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers' },
+  { parser: _140.MsgUpdateGroupAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupAdmin' },
+  { parser: _141.MsgUpdateGroupMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata' },
+  { parser: _142.MsgCreateGroupPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupPolicy' },
+  { parser: _143.MsgUpdateGroupPolicyAdmin, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyAdmin' },
+  { parser: _144.MsgCreateGroupWithPolicy, typeUrl: '/cosmos.group.v1.MsgCreateGroupWithPolicy' },
+  { parser: _145.MsgUpdateGroupPolicyDecisionPolicy, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy' },
+  { parser: _146.MsgUpdateGroupPolicyMetadata, typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyMetadata' },
+  { parser: _147.MsgSubmitProposal, typeUrl: '/cosmos.group.v1.MsgSubmitProposal' },
+  { parser: _148.MsgWithdrawProposal, typeUrl: '/cosmos.group.v1.MsgWithdrawProposal' },
+  { parser: _149.MsgVote, typeUrl: '/cosmos.group.v1.MsgVote' },
+  { parser: _150.MsgExec, typeUrl: '/cosmos.group.v1.MsgExec' },
+  { parser: _151.MsgLeaveGroup, typeUrl: '/cosmos.group.v1.MsgLeaveGroup' },
+  { parser: _152.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal' },
+  { parser: _153.MsgVote, typeUrl: '/cosmos.gov.v1beta1.MsgVote' },
+  { parser: _154.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted' },
+  { parser: _155.MsgDeposit, typeUrl: '/cosmos.gov.v1beta1.MsgDeposit' },
+  { parser: _156.MsgSubmitProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitProposal' },
+  { parser: _157.MsgExecLegacyContent, typeUrl: '/cosmos.gov.v1.MsgExecLegacyContent' },
+  { parser: _158.MsgVote, typeUrl: '/cosmos.gov.v1.MsgVote' },
+  { parser: _159.MsgVoteWeighted, typeUrl: '/cosmos.gov.v1.MsgVoteWeighted' },
+  { parser: _160.MsgDeposit, typeUrl: '/cosmos.gov.v1.MsgDeposit' },
+  { parser: _161.MsgUpdateParams, typeUrl: '/cosmos.gov.v1.MsgUpdateParams' },
+  { parser: _162.MsgCancelProposal, typeUrl: '/cosmos.gov.v1.MsgCancelProposal' },
+  { parser: _163.MsgSubmitMultipleChoiceProposal, typeUrl: '/cosmos.gov.v1.MsgSubmitMultipleChoiceProposal' },
+  { parser: _164.MsgUpdateMessageParams, typeUrl: '/cosmos.gov.v1.MsgUpdateMessageParams' },
+  { parser: _165.MsgSudoExec, typeUrl: '/cosmos.gov.v1.MsgSudoExec' },
+  { parser: _166.MsgGrantAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance' },
+  { parser: _167.MsgRevokeAllowance, typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance' },
+  { parser: _168.MsgPruneAllowances, typeUrl: '/cosmos.feegrant.v1beta1.MsgPruneAllowances' },
+  { parser: _169.MsgSubmitEvidence, typeUrl: '/cosmos.evidence.v1beta1.MsgSubmitEvidence' },
+  { parser: _170.MsgSetWithdrawAddress, typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress' },
+  { parser: _171.MsgWithdrawDelegatorReward, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward' },
+  { parser: _172.MsgWithdrawValidatorCommission, typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission' },
+  { parser: _173.MsgFundCommunityPool, typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool' },
+  { parser: _174.MsgUpdateParams, typeUrl: '/cosmos.distribution.v1beta1.MsgUpdateParams' },
+  { parser: _175.MsgCommunityPoolSpend, typeUrl: '/cosmos.distribution.v1beta1.MsgCommunityPoolSpend' },
+  { parser: _176.MsgDepositValidatorRewardsPool, typeUrl: '/cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool' },
+  { parser: _177.MsgVerifyInvariant, typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant' },
+  { parser: _178.MsgUpdateParams, typeUrl: '/cosmos.crisis.v1beta1.MsgUpdateParams' },
+  { parser: _179.MsgIncreaseCounter, typeUrl: '/cosmos.counter.v1.MsgIncreaseCounter' },
+  { parser: _180.MsgUpdateParams, typeUrl: '/cosmos.consensus.v1.MsgUpdateParams' },
+  { parser: _181.MsgAuthorizeCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgAuthorizeCircuitBreaker' },
+  { parser: _182.MsgTripCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgTripCircuitBreaker' },
+  { parser: _183.MsgResetCircuitBreaker, typeUrl: '/cosmos.circuit.v1.MsgResetCircuitBreaker' },
+  { parser: _184.MsgDescriptor, typeUrl: '/cosmos.base.reflection.v2alpha1.MsgDescriptor' },
+  { parser: _185.MsgSend, typeUrl: '/cosmos.bank.v1beta1.MsgSend' },
+  { parser: _186.MsgMultiSend, typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend' },
+  { parser: _187.MsgUpdateParams, typeUrl: '/cosmos.bank.v1beta1.MsgUpdateParams' },
+  { parser: _188.MsgSetSendEnabled, typeUrl: '/cosmos.bank.v1beta1.MsgSetSendEnabled' },
+  { parser: _189.MsgBurn, typeUrl: '/cosmos.bank.v1beta1.MsgBurn' },
+  { parser: _190.MsgGrant, typeUrl: '/cosmos.authz.v1beta1.MsgGrant' },
+  { parser: _191.MsgExec, typeUrl: '/cosmos.authz.v1beta1.MsgExec' },
+  { parser: _192.MsgRevoke, typeUrl: '/cosmos.authz.v1beta1.MsgRevoke' },
+  { parser: _193.MsgPruneExpiredGrants, typeUrl: '/cosmos.authz.v1beta1.MsgPruneExpiredGrants' },
+  { parser: _194.MsgUpdateParams, typeUrl: '/cosmos.auth.v1beta1.MsgUpdateParams' },
+  { parser: _195.MsgInit, typeUrl: '/cosmos.accounts.v1.MsgInit' },
+  { parser: _196.MsgExecute, typeUrl: '/cosmos.accounts.v1.MsgExecute' },
+  { parser: _197.MsgExecuteBundle, typeUrl: '/cosmos.accounts.v1.MsgExecuteBundle' },
+  { parser: _198.MsgInit, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgInit' },
+  { parser: _199.MsgRotatePubKey, typeUrl: '/cosmos.accounts.testing.rotation.v1.MsgRotatePubKey' },
+  { parser: _200.MsgInit, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgInit' },
+  { parser: _201.MsgIncreaseCounter, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgIncreaseCounter' },
+  { parser: _202.MsgTestDependencies, typeUrl: '/cosmos.accounts.testing.counter.v1.MsgTestDependencies' },
+  { parser: _203.MsgAuthenticate, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgAuthenticate' },
+  { parser: _204.MsgPayBundler, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgPayBundler' },
+  { parser: _205.MsgExecute, typeUrl: '/cosmos.accounts.interfaces.account_abstraction.v1.MsgExecute' },
 ];
