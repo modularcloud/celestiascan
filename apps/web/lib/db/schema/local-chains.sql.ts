@@ -2,7 +2,7 @@ import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import type { SingleNetwork } from "~/lib/network";
 
 export const localChains = sqliteTable("local_chains", {
-  internalId: text("id").primaryKey(),
+  internalId: integer("id", { mode: "number" }).primaryKey(),
   brand: text("brand").notNull(),
   chainName: text("chainName").notNull(),
   config: text("config", { mode: "json" })

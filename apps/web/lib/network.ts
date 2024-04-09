@@ -38,7 +38,7 @@ export const singleNetworkSchema = z.object({
   chainName: z.string(),
   brand: z.string(),
   accountId: z.string(),
-  internalId: z.string(),
+  internalId: z.coerce.number(),
   integrationId: z.string().uuid(),
   createdTime: z.coerce.date(),
   namespace: z.string().nullish(),

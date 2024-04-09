@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     daLayer: body.daLayer,
     paidVersion: false,
     accountId: generateRandomString(20),
-    internalId: (existingLocalChains.length + 1).toString(),
+    internalId: existingLocalChains.length + 1,
     integrationId: crypto.randomUUID(),
     createdTime: new Date(),
   } satisfies SingleNetwork;
