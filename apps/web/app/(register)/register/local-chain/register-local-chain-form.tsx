@@ -1,17 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as React from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
+import type { SingleNetwork } from "~/lib/network";
 import { jsonFetch } from "~/lib/shared-utils";
 import { EventFor } from "~/lib/types";
 import { Button } from "~/ui/button";
 import {
   Camera,
   CheckCircleOutline,
+  Home2,
   Link as LinkIcon,
   Loader,
   Warning,
@@ -24,6 +28,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from "~/ui/shadcn/components/ui/alert";
+import { cn } from "~/ui/shadcn/utils";
 
 const rpcStatusResponseSchema = z.object({
   result: z.object({
@@ -101,15 +106,15 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   const [logoFileDataURL, setLogoFileDataURL] = React.useState<string | null>(
     null,
   );
-  const [errors, action] = useFormState(formAction, null);
+  const [status, action] = useFormState(formAction, null);
   const formRef = React.useRef<React.ElementRef<"form">>(null);
   const [isCheckingNetworkStatus, startNetworkStatusTransition] =
     React.useTransition();
-  const [isSubmitting, startTransition] = React.useTransition();
   const [networkStatus, setNetworkStatus] = React.useState<{
     [rpcURL: string]: "HEALTHY" | "UNHEALTHY";
   } | null>(null);
   const [rpcUrl, setRPCUrl] = React.useState("");
+  const router = useRouter();
 
   async function formAction(_: any, formData: FormData) {
     console.log("FORMACTION");
@@ -130,24 +135,33 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
 
     const parseResult = await localChainFormSchema.safeParseAsync(formData);
     if (parseResult.success) {
-      const data = parseResult.data;
-
-      console.log({ data, formData });
-      startTransition(async () => {
-        const res = await fetch("/api/local-chains", {
-          body: formData,
-          method: "POST",
-          headers: {
-            accept: "application/json",
-          },
-        });
-
-        console.log({
-          res,
-        });
+      const res = await fetch("/api/local-chains", {
+        body: formData,
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
       });
+
+      router.refresh();
+      return await res.json();
     } else {
       return parseResult.error.flatten();
+    }
+  }
+
+  function checkForNetworkStatusBeforeSubmission(
+    event: EventFor<"button", "onClick">,
+  ) {
+    const form = event.currentTarget.form!;
+    const formData = new FormData(form);
+    const rpcUrl = formData.get("rpcUrl")?.toString().trim();
+    if (rpcUrl && networkStatus?.[rpcUrl] !== "HEALTHY") {
+      event.preventDefault();
+      startNetworkStatusTransition(
+        async () =>
+          await fetchNetworkStatus(rpcUrl).then(() => form.requestSubmit()),
+      );
     }
   }
 
@@ -169,14 +183,27 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
     }
   }
 
-  const fieldErrors = errors?.fieldErrors as unknown as Record<
+  if (status?.data) {
+    return <SuccessStep network={status.data as SingleNetwork} />;
+  }
+
+  const fieldErrors = status?.fieldErrors as unknown as Record<
     string,
     string[] | undefined
   >;
-  const formErrors = errors?.formErrors;
-  console.log("RENDER", { fieldErrors });
+  const formErrors = status?.formErrors;
+  console.log("RENDER", { fieldErrors, formErrors });
   return (
     <form className="flex flex-col gap-4" ref={formRef} action={action}>
+      <div className="flex flex-col items-center gap-3 mb-4">
+        <img
+          src="/images/mc-logo.svg"
+          alt="Modular Cloud logo"
+          className="h-8 w-8 mb-3"
+        />
+        <h1 className="font-medium text-2xl">Register a Local chain</h1>
+      </div>
+
       {formErrors && formErrors?.length > 0 && (
         <Alert variant="danger">
           <Warning className="h-4 w-4 flex-none" aria-hidden="true" />
@@ -370,31 +397,107 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         />
       </div>
 
-      <Button
-        type="submit"
-        color="primary"
-        className="px-3 py-1 w-full md:w-auto text-center items-center justify-center gap-1 mt-6"
-        onClick={(e: EventFor<"button", "onClick">) => {
-          const form = e.currentTarget.form!;
-          const formData = new FormData(form);
-          const rpcUrl = formData.get("rpcUrl")?.toString().trim();
-          console.log({ rpcUrl, networkStatus });
-          if (rpcUrl && networkStatus?.[rpcUrl] !== "HEALTHY") {
-            e.preventDefault();
-            console.log("PREVENT DEFAULT");
-            startNetworkStatusTransition(
-              async () =>
-                await fetchNetworkStatus(rpcUrl).then(() =>
-                  form.requestSubmit(),
-                ),
-            );
-          }
-        }}
-        aria-disabled={isSubmitting}
-      >
-        {isSubmitting && <LoadingIndicator className="text-white h-4 w-4" />}
-        <span>Submit</span>
-      </Button>
+      <SubmitButton onClick={checkForNetworkStatusBeforeSubmission} />
     </form>
+  );
+}
+
+function SuccessStep({ network }: { network: SingleNetwork }) {
+  const router = useRouter();
+  const [isNavigating, startTransition] = React.useTransition();
+
+  // Prefetch the route to make it faster to navigate to it
+  React.useEffect(() => {
+    router.prefetch(`/${network.slug}`);
+  }, [router, network.slug]);
+
+  return (
+    <div className="h-full w-full fixed inset-0">
+      <div
+        className={cn(
+          "absolute flex flex-col gap-4 w-[20rem] md:w-[30rem]",
+          "animate-slide-up-from-bottom top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+        )}
+      >
+        <div
+          className={cn(
+            "",
+            "border border-mid-dark-100 bg-muted-100 px-8 py-6 rounded-md ",
+          )}
+        >
+          <img
+            src="/images/bg-btn.svg"
+            className="absolute left-0 top-0 right-0"
+            alt=""
+          />
+          <div className="flex items-center gap-2 md:mx-10">
+            <span className="text-2xl">🎈</span>
+            <div className="flex flex-col">
+              <p className="relative z-10 font-medium">
+                You have successfully registered Local Blockchain !
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-4">
+          <Button
+            color="primary"
+            onClick={() =>
+              startTransition(() => router.push(`/${network.slug}`))
+            }
+            variant="bordered"
+            className="flex-1 inline-flex justify-center gap-1"
+          >
+            <span>
+              {isNavigating ? (
+                <Loader
+                  className="animate-spin text-white h-4 w-4"
+                  aria-hidden="true"
+                />
+              ) : (
+                <Home2 className="h-4 w-4" aria-hidden="true" strokeWidth={2} />
+              )}
+            </span>
+            <span>Go to your chain&rsquo;s homepage </span>
+          </Button>
+        </div>
+      </div>
+
+      <img
+        src="/images/confetti_left.svg"
+        alt=""
+        className="absolute -left-4 -bottom-4 animate-slide-up-from-left"
+      />
+      <img
+        src="/images/confetti_right.svg"
+        alt=""
+        className="absolute -right-4 -bottom-4 animate-slide-up-from-right"
+      />
+    </div>
+  );
+}
+
+function SubmitButton({
+  onClick,
+}: {
+  onClick: (e: EventFor<"button", "onClick">) => void;
+}) {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      type="submit"
+      color="primary"
+      className="px-3 py-1 w-full md:w-auto text-center items-center justify-center gap-1 mt-6"
+      onClick={onClick}
+      aria-disabled={pending}
+    >
+      {pending && (
+        <Loader
+          className="animate-spin text-white h-4 w-4"
+          aria-hidden="true"
+        />
+      )}
+      <span>Submit</span>
+    </Button>
   );
 }

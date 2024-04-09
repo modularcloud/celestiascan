@@ -8,7 +8,7 @@ import crypto from "crypto";
 import { fileTypeFromBlob } from "file-type";
 import { db } from "~/lib/db";
 import { localChains } from "~/lib/db/schema/local-chains.sql";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { CACHE_KEYS } from "~/lib/cache-keys";
 
 export const runtime = "nodejs";
@@ -22,9 +22,7 @@ export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET !== "electron") {
     return Response.json(
       {
-        errors: {
-          root: ["this feature is only available for the electron target"],
-        },
+        formErrors: ["this feature is only available for the electron target"],
       },
       { status: 403 },
     );
@@ -96,7 +94,7 @@ export async function POST(request: NextRequest) {
     config: { ...restConfig },
   });
 
-  await db
+  const data = await db
     .insert(localChains)
     .values(chainData)
     .onConflictDoUpdate({
@@ -107,13 +105,16 @@ export async function POST(request: NextRequest) {
         startHeight: chainData.startHeight,
         daLayer: chainData.daLayer,
       },
-    });
+    })
+    .returning();
 
+  revalidatePath("/", "layout");
   for (const tag of CACHE_KEYS.networks.local()) {
     revalidateTag(tag);
   }
 
   return Response.json({
     success: true,
+    data: data[0],
   });
 }
