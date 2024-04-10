@@ -6,7 +6,7 @@ import type { SingleNetwork } from "~/lib/network";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "crypto";
 import { fileTypeFromBlob } from "file-type";
-import { db } from "~/lib/db";
+import { getDbClient } from "~/lib/db";
 import { localChains } from "~/lib/db/schema/local-chains.sql";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { CACHE_KEYS } from "~/lib/cache-keys";
@@ -15,7 +15,9 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  return Response.json(await db.select().from(localChains));
+  return Response.json(
+    await getDbClient().then((db) => db.select().from(localChains)),
+  );
 }
 
 export async function POST(request: NextRequest) {
@@ -55,6 +57,8 @@ export async function POST(request: NextRequest) {
     const { mime } = (await fileTypeFromBlob(logo))!;
     logoUrl = `data:${mime};base64,${base64Data}`;
   }
+
+  const db = await getDbClient();
 
   const existingLocalChains = await db.select().from(localChains);
 

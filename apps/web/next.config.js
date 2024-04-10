@@ -13,6 +13,9 @@ const config = {
       },
     ];
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@electric-sql/pglite"],
+  },
   reactStrictMode: true,
   transpilePackages: ["service-manager"],
   logging: {

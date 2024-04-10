@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { env } from "~/env";
-import { db } from "~/lib/db";
+import { getDbClient } from "~/lib/db";
 import { localChains } from "~/lib/db/schema/local-chains.sql";
 import { eq } from "drizzle-orm";
 
@@ -23,10 +23,9 @@ export async function GET(
   }
 
   const slug = ctx.params.slug;
-  const data = await db
-    .select()
-    .from(localChains)
-    .where(eq(localChains.slug, slug));
+  const data = await getDbClient().then((db) =>
+    db.select().from(localChains).where(eq(localChains.slug, slug)),
+  );
 
   return Response.json(data[0] ?? null);
 }

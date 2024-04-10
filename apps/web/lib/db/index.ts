@@ -4,13 +4,14 @@ import { drizzle } from "drizzle-orm/pglite";
 import { PGlite } from "@electric-sql/pglite";
 import { sql } from "drizzle-orm";
 
-const client = new PGlite("./pgdata");
-export const db = drizzle(client, {
-  schema: {
-    localChains,
-  },
-});
-await db.execute(sql`CREATE TABLE IF NOT EXISTS  "local_chains" (
+export async function getDbClient() {
+  const client = new PGlite("./pgdata");
+  const db = drizzle(client, {
+    schema: {
+      localChains,
+    },
+  });
+  await db.execute(sql`CREATE TABLE IF NOT EXISTS  "local_chains" (
     id SERIAL PRIMARY KEY,
     internalid INTEGER,
     brand TEXT NOT NULL,
@@ -26,3 +27,5 @@ await db.execute(sql`CREATE TABLE IF NOT EXISTS  "local_chains" (
     createdtime TIMESTAMP NOT NULL
 );
 `);
+  return db;
+}
