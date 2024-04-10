@@ -14,7 +14,8 @@ const config = {
     ];
   },
   experimental: {
-    serverComponentsExternalPackages: ["@electric-sql/pglite"],
+    serverComponentsExternalPackages:
+      process.env.NODE_ENV === "production" ? ["@electric-sql/pglite"] : [],
   },
   reactStrictMode: true,
   transpilePackages: ["service-manager"],
