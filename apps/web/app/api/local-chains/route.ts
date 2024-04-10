@@ -15,7 +15,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  return Response.json(db.select().from(localChains).all());
+  return Response.json(await db.select().from(localChains));
 }
 
 export async function POST(request: NextRequest) {
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     logoUrl = `data:${mime};base64,${base64Data}`;
   }
 
-  const existingLocalChains = db.select().from(localChains).all();
+  const existingLocalChains = await db.select().from(localChains);
 
   const chainData = {
     chainName: body.chainName,

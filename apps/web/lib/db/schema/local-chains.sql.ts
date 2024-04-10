@@ -1,21 +1,28 @@
-import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import {
+  text,
+  integer,
+  pgTable,
+  serial,
+  json,
+  boolean,
+  timestamp,
+} from "drizzle-orm/pg-core";
 import type { SingleNetwork } from "~/lib/network";
 
-export const localChains = sqliteTable("local_chains", {
-  internalId: integer("id", { mode: "number" }).primaryKey(),
+export const localChains = pgTable("local_chains", {
+  id: serial("id").primaryKey(),
+  internalId: integer("internalid"),
   brand: text("brand").notNull(),
-  chainName: text("chainName").notNull(),
-  config: text("config", { mode: "json" })
-    .notNull()
-    .$type<SingleNetwork["config"]>(),
-  paidVersion: integer("paidVersion", { mode: "boolean" }).notNull(),
+  chainName: text("chainname").notNull(),
+  config: json("config").notNull().$type<SingleNetwork["config"]>(),
+  paidVersion: boolean("paidversion").notNull(),
   slug: text("slug").notNull().unique(),
-  accountId: text("accountId").notNull(),
-  integrationId: text("integrationId").notNull(),
+  accountId: text("accountid").notNull(),
+  integrationId: text("integrationid").notNull(),
   namespace: text("namespace"),
-  daLayer: text("daLayer"),
-  startHeight: integer("startHeight"),
-  createdTime: integer("id", { mode: "timestamp" }).notNull(),
+  daLayer: text("dalayer"),
+  startHeight: integer("startheight"),
+  createdTime: timestamp("createdtime").notNull(),
 });
 
 export type LocalChain = typeof localChains.$inferSelect;

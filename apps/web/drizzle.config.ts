@@ -3,8 +3,9 @@ import type { Config } from "drizzle-kit";
 export default {
   schema: "./lib/db/schema/*.sql.ts",
   out: "./lib/db/drizzle",
-  driver: "better-sqlite",
+  driver: "pg",
   dbCredentials: {
-    url: "db.sqlite",
+    connectionString: "postgresql://./pgdata",
+    // url: "db.sqlite",
   },
 } satisfies Config;
