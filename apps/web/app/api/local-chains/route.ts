@@ -54,8 +54,10 @@ export async function POST(request: NextRequest) {
   let logoUrl = `/images/rollkit-logo.svg`;
   if (logo) {
     const base64Data = Buffer.from(await logo.arrayBuffer()).toString("base64");
-    const { mime } = (await fileTypeFromBlob(logo))!;
-    logoUrl = `data:${mime};base64,${base64Data}`;
+    const fileType = await fileTypeFromBlob(logo);
+    if (fileType?.mime) {
+      logoUrl = `data:${fileType.mime};base64,${base64Data}`;
+    }
   }
 
   const db = await getDbClient();
