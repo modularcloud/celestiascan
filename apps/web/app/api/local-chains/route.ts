@@ -55,6 +55,10 @@ export async function POST(request: NextRequest) {
   if (logo) {
     const base64Data = Buffer.from(await logo.arrayBuffer()).toString("base64");
     const fileType = await fileTypeFromBlob(logo);
+    console.log({
+      fileType,
+      logo,
+    });
     if (fileType?.mime) {
       logoUrl = `data:${fileType.mime};base64,${base64Data}`;
     }
