@@ -6,6 +6,7 @@ const { createEnv } = require("@t3-oss/env-nextjs");
 const env = createEnv({
   server: {
     DEPLOYMENT_WEBHOOK_SECRET: z.string().optional(),
+    ROOT_USER_PATH: z.string().optional().default(""),
     GITHUB_ACTION_TRIGGER_PERSONAL_ACCESS_TOKEN: z.string().optional(),
     NAMESPACE_ENDPOINT: z.string().url().optional(),
     BLOB_READ_WRITE_TOKEN: z.string().optional(),
@@ -74,6 +75,7 @@ const env = createEnv({
     DEPLOYMENT_WEBHOOK_SECRET: process.env.DEPLOYMENT_WEBHOOK_SECRET,
     GITHUB_ACTION_TRIGGER_PERSONAL_ACCESS_TOKEN:
       process.env.GITHUB_ACTION_TRIGGER_PERSONAL_ACCESS_TOKEN,
+    ROOT_USER_PATH: process.env.ROOT_USER_PATH,
   },
 });
 

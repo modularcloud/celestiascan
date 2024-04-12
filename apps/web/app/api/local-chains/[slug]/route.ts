@@ -1,8 +1,9 @@
 import { NextRequest } from "next/server";
 import { env } from "~/env";
-import { getDbClient } from "~/lib/db";
-import { localChains } from "~/lib/db/schema/local-chains.sql";
-import { eq } from "drizzle-orm";
+import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
+import path from "path";
+import { CACHE_KEYS } from "~/lib/cache-keys";
+import { LOCAL_CHAIN_CACHE_DIR } from "~/lib/constants";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,9 +24,9 @@ export async function GET(
   }
 
   const slug = ctx.params.slug;
-  const data = await getDbClient().then((db) =>
-    db.select().from(localChains).where(eq(localChains.slug, slug)),
+  const fsCache = new FileSystemCacheDEV(
+    path.join(env.ROOT_USER_PATH, LOCAL_CHAIN_CACHE_DIR),
   );
 
-  return Response.json(data[0] ?? null);
+  return Response.json(await fsCache.get(CACHE_KEYS.networks.single(slug)));
 }

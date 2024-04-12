@@ -15,3 +15,4 @@ export const OG_SIZE = {
 };
 
 export const ALWAYS_ONLINE_NETWORKS = ["celestia", "eclipse"];
+export const LOCAL_CHAIN_CACHE_DIR = ".next/cache/local-chains";

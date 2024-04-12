@@ -61,11 +61,7 @@ export const getAllNetworks = cache(async function getAllNetworks() {
           next: { tags: CACHE_KEYS.networks.local() },
         },
       )
-        .then(async (r) => {
-          const data = JSON.parse(await r.text());
-          console.log({ data });
-          return data;
-        })
+        .then((r) => r.json())
         .then(allNetworkSchema.parse);
     } catch (error) {
       //... do absolutely nothing

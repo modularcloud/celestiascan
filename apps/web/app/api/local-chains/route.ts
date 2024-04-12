@@ -6,18 +6,38 @@ import type { SingleNetwork } from "~/lib/network";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "crypto";
 import { fileTypeFromBlob } from "file-type";
-import { getDbClient } from "~/lib/db";
-import { localChains } from "~/lib/db/schema/local-chains.sql";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { CACHE_KEYS } from "~/lib/cache-keys";
+import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
+import path from "path";
+import { LOCAL_CHAIN_CACHE_DIR } from "~/lib/constants";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  return Response.json(
-    await getDbClient().then((db) => db.select().from(localChains)),
+  if (env.NEXT_PUBLIC_TARGET !== "electron") {
+    return Response.json(
+      {
+        errors: {
+          root: ["this feature is only available for the electron target"],
+        },
+      },
+      { status: 403 },
+    );
+  }
+
+  const fsCache = new FileSystemCacheDEV(
+    path.join(env.ROOT_USER_PATH, LOCAL_CHAIN_CACHE_DIR),
   );
+
+  const chainKeys = await fsCache.search(CACHE_KEYS.networks.single("local"));
+
+  const chains = await Promise.all(
+    chainKeys.map((key) => fsCache.get<SingleNetwork>(key)),
+  );
+
+  return Response.json(chains.filter((chain) => chain !== null));
 }
 
 export async function POST(request: NextRequest) {
@@ -55,23 +75,21 @@ export async function POST(request: NextRequest) {
   if (logo) {
     const base64Data = Buffer.from(await logo.arrayBuffer()).toString("base64");
     const fileType = await fileTypeFromBlob(logo);
-    console.log({
-      fileType,
-      logo,
-    });
     if (fileType?.mime) {
       logoUrl = `data:${fileType.mime};base64,${base64Data}`;
     }
   }
+  const fsCache = new FileSystemCacheDEV(
+    path.join(env.ROOT_USER_PATH, LOCAL_CHAIN_CACHE_DIR),
+  );
+  const items = await fsCache.search(CACHE_KEYS.networks.single("local"));
 
-  const db = await getDbClient();
-
-  const existingLocalChains = await db.select().from(localChains);
+  const networkSlug = `local-${slugify(body.chainName)}`;
 
   const chainData = {
     chainName: body.chainName,
     brand: "local",
-    slug: `local-${slugify(body.chainName)}`,
+    slug: networkSlug,
     config: {
       logoUrl,
       rpcUrls: {
@@ -90,7 +108,7 @@ export async function POST(request: NextRequest) {
     daLayer: body.daLayer,
     paidVersion: false,
     accountId: generateRandomString(20),
-    internalId: existingLocalChains.length + 1,
+    internalId: items.length + 1,
     integrationId: crypto.randomUUID(),
     createdTime: new Date(),
   } satisfies SingleNetwork;
@@ -100,31 +118,26 @@ export async function POST(request: NextRequest) {
     ...rest
   } = chainData;
   console.log({
-    ...rest,
-    config: { ...restConfig },
+    CONFIG_SAVED: {
+      ...rest,
+      config: { ...restConfig },
+    },
   });
 
-  const data = await db
-    .insert(localChains)
-    .values(chainData)
-    .onConflictDoUpdate({
-      target: localChains.slug,
-      set: {
-        config: chainData.config,
-        namespace: chainData.namespace,
-        startHeight: chainData.startHeight,
-        daLayer: chainData.daLayer,
-      },
-    })
-    .returning();
+  await fsCache.set(CACHE_KEYS.networks.single(networkSlug), {
+    ...chainData,
+    createdTime: chainData.createdTime.getTime(),
+  });
+
+  const [__, localTag] = CACHE_KEYS.networks.local();
+  const [allTag] = CACHE_KEYS.networks.all();
+  revalidateTag(allTag);
+  revalidateTag(localTag);
 
   revalidatePath("/", "layout");
-  for (const tag of CACHE_KEYS.networks.local()) {
-    revalidateTag(tag);
-  }
 
   return Response.json({
     success: true,
-    data: data[0],
+    data: chainData,
   });
 }

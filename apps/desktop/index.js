@@ -37,6 +37,7 @@ function getRandomPort() {
 
 let hasServerStarted = false;
 let totalAttempsLeft = 10;
+process.env.ROOT_USER_PATH = app.getPath("userData");
 while (!hasServerStarted && totalAttempsLeft > 0) {
   try {
     process.env.PORT = getRandomPort().toString();

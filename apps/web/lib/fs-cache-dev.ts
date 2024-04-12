@@ -11,8 +11,16 @@ export class FileSystemCacheDEV {
 
   private async initCacheDir(): Promise<void> {
     try {
-      await fs.mkdir(this.cacheDir, { recursive: true });
+      const stats = await fs.stat(this.cacheDir);
+      if (!stats.isDirectory()) {
+        await fs.mkdir(this.cacheDir, { recursive: true });
+      }
     } catch (error) {
+      if ((error as any).code === "ENOENT") {
+        await fs.mkdir(this.cacheDir, { recursive: true });
+        return;
+      }
+
       console.error("Error creating cache directory:", error);
     }
   }
@@ -26,6 +34,7 @@ export class FileSystemCacheDEV {
   }
 
   async set<T>(key: CacheId, value: T, ttl?: number): Promise<void> {
+    await this.initCacheDir();
     const cacheEntry: CacheEntry<T> = {
       value,
       expiry: ttl ? Date.now() + ttl * 1000 : null,
@@ -35,6 +44,7 @@ export class FileSystemCacheDEV {
   }
 
   async get<T>(key: CacheId): Promise<T | null> {
+    await this.initCacheDir();
     const filePath = this.getFilePath(this.computeCacheKey(key));
     try {
       const data = await fs.readFile(filePath, "utf-8");
@@ -52,12 +62,18 @@ export class FileSystemCacheDEV {
     }
   }
 
+  /**
+   * Search for keys in the cache, return all keys that starts with with the key passed in argument
+   * @param key The key to look up for
+   * @returns the list of keys it found
+   */
   async search(key: CacheId): Promise<string[]> {
+    await this.initCacheDir();
     const files = await fs.readdir(this.cacheDir);
     return Promise.all(
-      files.filter((fileName) =>
-        fileName.startsWith(this.computeCacheKey(fileName)),
-      ),
+      files
+        .filter((fileName) => fileName.startsWith(this.computeCacheKey(key)))
+        .map((file) => file.replaceAll(".json", "")),
     );
   }
 
