@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import { preprocess, z } from "zod";
-import { zfd } from "zod-form-data";
+import { z } from "zod";
+import { localChainFormSchema } from "./local-chain-schema";
 import type { SingleNetwork } from "~/lib/network";
 import { jsonFetch } from "~/lib/shared-utils";
 import { EventFor } from "~/lib/types";
@@ -38,66 +38,6 @@ const rpcStatusResponseSchema = z.object({
   }),
 });
 
-export const localChainFormSchema = zfd.formData({
-  chainName: z.string().trim().min(1),
-  namespace: z.string().trim().optional(),
-  startHeight: z.coerce.number().int().optional(),
-  daLayer: z.string().trim().optional(),
-  logo: zfd.file(z.instanceof(File).nullish()),
-  rpcUrl: z.string().trim().url(),
-  rpcPlatform: preprocess(
-    (arg) => (typeof arg === "string" ? arg.toLowerCase() : arg),
-    z.enum(["cosmos"]).default("cosmos"),
-  ),
-  tokenDecimals: z.coerce.number().int().positive(),
-  tokenName: z.string().trim().min(1),
-});
-
-async function isFileAnImage(file: Blob) {
-  const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      if (fileReader.result instanceof ArrayBuffer) {
-        resolve(fileReader.result);
-      }
-    };
-    fileReader.readAsArrayBuffer(file);
-  });
-
-  const first4Bytes = new Uint8Array(buffer).subarray(0, 4);
-  let fileHeader = "";
-  let mimeType: string | null = null;
-
-  for (const byte of first4Bytes) {
-    fileHeader += byte.toString(16);
-  }
-
-  switch (fileHeader) {
-    case "89504e47": {
-      mimeType = "image/png";
-      break;
-    }
-    case "47494638": {
-      mimeType = "image/gif";
-      break;
-    }
-    case "52494646":
-    case "57454250":
-      mimeType = "image/webp";
-      break;
-    case "ffd8ffe0":
-    case "ffd8ffe1":
-    case "ffd8ffe2":
-    case "ffd8ffe3":
-    case "ffd8ffe8":
-      mimeType = "image/jpeg";
-      break;
-  }
-  return mimeType !== null;
-}
-
-export type RegisterLocalChainFormProps = {};
-
 async function readFileAsDataURL(file: File) {
   return await new Promise<string>((resolve, reject) => {
     let fileReader = new FileReader();
@@ -115,7 +55,7 @@ async function readFileAsDataURL(file: File) {
   });
 }
 
-export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
+export function RegisterLocalChainForm() {
   const [logoFileDataURL, setLogoFileDataURL] = React.useState<string | null>(
     null,
   );
@@ -130,33 +70,16 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   const router = useRouter();
 
   async function formAction(_: any, formData: FormData) {
-    console.log("FORMACTION");
-    if (formData.get("logo")) {
-      if (formRef.current?.logo.files.length === 0) {
-        // we do this because the logo will have a value even if we don't select any file,
-        // so this way if there is truly no selected file, it returns `undefined`
-        formData.delete("logo");
-      } else {
-        if (!(await isFileAnImage(formData.get("logo") as Blob))) {
-          return {
-            fieldErrors: null,
-            formErrors: ["The file you tried to upload is not an image."],
-          };
-        }
-      }
-    }
-
-    const parseResult = localChainFormSchema.safeParse(formData);
+    const parseResult = localChainFormSchema.safeParse(
+      Object.fromEntries(formData.entries()),
+    );
     if (parseResult.success) {
       const data = parseResult.data;
       const res = await jsonFetch<{
         success: boolean;
         data: SingleNetwork;
       }>("/api/local-chains", {
-        body: {
-          ...data,
-          logo: data.logo ? await readFileAsDataURL(data.logo) : null,
-        },
+        body: data,
         method: "POST",
       });
 
@@ -205,10 +128,9 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
   }
 
   const fieldErrors =
-    status && "fieldErrors" in status
-      ? (status?.fieldErrors as unknown as Record<string, string[] | undefined>)
-      : null;
-  const formErrors = status && "formErrors" in status && status?.formErrors;
+    status && "fieldErrors" in status ? status?.fieldErrors : null;
+  const formErrors =
+    status && "formErrors" in status ? status?.formErrors : null;
   console.log("RENDER", { fieldErrors, formErrors });
   return (
     <form className="flex flex-col gap-4" ref={formRef} action={action}>
@@ -221,20 +143,23 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
         <h1 className="font-medium text-2xl">Register a Local chain</h1>
       </div>
 
-      {formErrors && formErrors?.length > 0 && (
-        <Alert variant="danger">
-          <Warning className="h-4 w-4 flex-none" aria-hidden="true" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{formErrors}</AlertDescription>
-        </Alert>
-      )}
+      {(formErrors && formErrors?.length > 0) ||
+        (fieldErrors?.logo && (
+          <Alert variant="danger">
+            <Warning className="h-4 w-4 flex-none" aria-hidden="true" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              {formErrors}
+              {fieldErrors?.logo}
+            </AlertDescription>
+          </Alert>
+        ))}
 
       <div className="grid grid-cols-5 gap-3">
         <label className="flex items-center justify-center w-full h-full">
           <span className="sr-only">Logo</span>
           <input
             type="file"
-            name="logo"
             id="logo"
             accept="image/*"
             className="sr-only peer"
@@ -246,16 +171,20 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
               }
             }}
           />
+
           <div
             aria-hidden="true"
             className="peer-focus:ring-2 peer-focus:border peer-focus:border-primary transition duration-150 rounded-full h-[4.25rem] w-[4.25rem] border bg-muted-100 flex items-center justify-center"
           >
             {logoFileDataURL ? (
-              <img
-                alt=""
-                src={logoFileDataURL}
-                className="object-cover object-center rounded-full w-full h-full"
-              />
+              <>
+                <img
+                  alt=""
+                  src={logoFileDataURL}
+                  className="object-cover object-center rounded-full w-full h-full"
+                />
+                <input type="hidden" name="logo" value={logoFileDataURL} />
+              </>
             ) : (
               <Camera className="w-4 h-4 text-muted" />
             )}

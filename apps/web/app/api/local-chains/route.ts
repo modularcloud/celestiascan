@@ -9,7 +9,7 @@ import { CACHE_KEYS } from "~/lib/cache-keys";
 import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
 import path from "path";
 import { LOCAL_CHAIN_CACHE_DIR } from "~/lib/constants";
-import { preprocess, z } from "zod";
+import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,21 +38,6 @@ export async function GET(request: NextRequest) {
 
   return Response.json(chains.filter((chain) => chain !== null));
 }
-
-export const localChainFormSchema = z.object({
-  chainName: z.string().trim().min(1),
-  namespace: z.string().trim().optional(),
-  startHeight: z.coerce.number().int().optional(),
-  daLayer: z.string().trim().optional(),
-  logo: z.string().nullish(),
-  rpcUrl: z.string().trim().url(),
-  rpcPlatform: preprocess(
-    (arg) => (typeof arg === "string" ? arg.toLowerCase() : arg),
-    z.enum(["cosmos"]).default("cosmos"),
-  ),
-  tokenDecimals: z.coerce.number().int().positive(),
-  tokenName: z.string().trim().min(1),
-});
 
 export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET !== "electron") {
