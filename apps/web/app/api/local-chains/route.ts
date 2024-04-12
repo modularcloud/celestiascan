@@ -1,16 +1,15 @@
 import { NextRequest } from "next/server";
 import { env } from "~/env";
-import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
 import slugify from "@sindresorhus/slugify";
 import type { SingleNetwork } from "~/lib/network";
 import { generateRandomString } from "~/lib/shared-utils";
 import crypto from "crypto";
-import { fileTypeFromBlob } from "file-type";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { CACHE_KEYS } from "~/lib/cache-keys";
 import { FileSystemCacheDEV } from "~/lib/fs-cache-dev";
 import path from "path";
 import { LOCAL_CHAIN_CACHE_DIR } from "~/lib/constants";
+import { preprocess, z } from "zod";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,6 +39,21 @@ export async function GET(request: NextRequest) {
   return Response.json(chains.filter((chain) => chain !== null));
 }
 
+export const localChainFormSchema = z.object({
+  chainName: z.string().trim().min(1),
+  namespace: z.string().trim().optional(),
+  startHeight: z.coerce.number().int().optional(),
+  daLayer: z.string().trim().optional(),
+  logo: z.string().nullish(),
+  rpcUrl: z.string().trim().url(),
+  rpcPlatform: preprocess(
+    (arg) => (typeof arg === "string" ? arg.toLowerCase() : arg),
+    z.enum(["cosmos"]).default("cosmos"),
+  ),
+  tokenDecimals: z.coerce.number().int().positive(),
+  tokenName: z.string().trim().min(1),
+});
+
 export async function POST(request: NextRequest) {
   if (env.NEXT_PUBLIC_TARGET !== "electron") {
     return Response.json(
@@ -49,36 +63,15 @@ export async function POST(request: NextRequest) {
       { status: 403 },
     );
   }
-  const formData = await request.formData();
-  const logoFile = formData.get("logo");
 
-  if (logoFile instanceof File) {
-    const logoImageType = await fileTypeFromBlob(logoFile);
-    if (!logoImageType) {
-      return Response.json(
-        {
-          formErrors: ["The file you tried to upload is not an image."],
-        },
-        { status: 422 },
-      );
-    }
-  }
-
-  const result = await localChainFormSchema.safeParseAsync(formData);
+  const result = localChainFormSchema.safeParse(await request.json());
   if (!result.success) {
     return Response.json(result.error.flatten(), { status: 422 });
   }
 
   const { logo, ...body } = result.data;
 
-  let logoUrl = `/images/rollkit-logo.svg`;
-  if (logo) {
-    const base64Data = Buffer.from(await logo.arrayBuffer()).toString("base64");
-    const fileType = await fileTypeFromBlob(logo);
-    if (fileType?.mime) {
-      logoUrl = `data:${fileType.mime};base64,${base64Data}`;
-    }
-  }
+  let logoUrl = logo ?? `/images/rollkit-logo.svg`;
   const fsCache = new FileSystemCacheDEV(
     path.join(env.ROOT_USER_PATH, LOCAL_CHAIN_CACHE_DIR),
   );

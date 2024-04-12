@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import { z } from "zod";
-import { localChainFormSchema } from "~/app/(register)/register/local-chain/local-chain-form-schema";
+import { preprocess, z } from "zod";
+import { zfd } from "zod-form-data";
 import type { SingleNetwork } from "~/lib/network";
 import { jsonFetch } from "~/lib/shared-utils";
 import { EventFor } from "~/lib/types";
@@ -21,7 +20,6 @@ import {
   Warning,
 } from "~/ui/icons";
 import { Input } from "~/ui/input";
-import { LoadingIndicator } from "~/ui/loading-indicator";
 import { Select, SelectContent, SelectItem } from "~/ui/select";
 import {
   Alert,
@@ -38,6 +36,21 @@ const rpcStatusResponseSchema = z.object({
       latest_block_height: z.coerce.number(),
     }),
   }),
+});
+
+export const localChainFormSchema = zfd.formData({
+  chainName: z.string().trim().min(1),
+  namespace: z.string().trim().optional(),
+  startHeight: z.coerce.number().int().optional(),
+  daLayer: z.string().trim().optional(),
+  logo: zfd.file(z.instanceof(File).nullish()),
+  rpcUrl: z.string().trim().url(),
+  rpcPlatform: preprocess(
+    (arg) => (typeof arg === "string" ? arg.toLowerCase() : arg),
+    z.enum(["cosmos"]).default("cosmos"),
+  ),
+  tokenDecimals: z.coerce.number().int().positive(),
+  tokenName: z.string().trim().min(1),
 });
 
 async function isFileAnImage(file: Blob) {
@@ -133,18 +146,22 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
       }
     }
 
-    const parseResult = await localChainFormSchema.safeParseAsync(formData);
+    const parseResult = localChainFormSchema.safeParse(formData);
     if (parseResult.success) {
-      const res = await fetch("/api/local-chains", {
-        body: formData,
-        method: "POST",
-        headers: {
-          accept: "application/json",
+      const data = parseResult.data;
+      const res = await jsonFetch<{
+        success: boolean;
+        data: SingleNetwork;
+      }>("/api/local-chains", {
+        body: {
+          ...data,
+          logo: data.logo ? await readFileAsDataURL(data.logo) : null,
         },
+        method: "POST",
       });
 
       router.refresh();
-      return await res.json();
+      return res;
     } else {
       return parseResult.error.flatten();
     }
@@ -183,15 +200,15 @@ export function RegisterLocalChainForm({}: RegisterLocalChainFormProps) {
     }
   }
 
-  if (status?.data) {
+  if (status && "data" in status && status?.data) {
     return <SuccessStep network={status.data as SingleNetwork} />;
   }
 
-  const fieldErrors = status?.fieldErrors as unknown as Record<
-    string,
-    string[] | undefined
-  >;
-  const formErrors = status?.formErrors;
+  const fieldErrors =
+    status && "fieldErrors" in status
+      ? (status?.fieldErrors as unknown as Record<string, string[] | undefined>)
+      : null;
+  const formErrors = status && "formErrors" in status && status?.formErrors;
   console.log("RENDER", { fieldErrors, formErrors });
   return (
     <form className="flex flex-col gap-4" ref={formRef} action={action}>
