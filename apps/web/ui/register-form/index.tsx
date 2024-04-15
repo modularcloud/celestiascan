@@ -235,7 +235,7 @@ export function RegisterForm() {
             <img
               src="/images/mc-logo.svg"
               alt="Modular Cloud logo"
-              className="h-6 w-6 mb-3"
+              className="h-8 w-8 mb-3"
             />
             <h1 className="font-medium text-2xl">{title}</h1>
             <p>{subTitle}</p>

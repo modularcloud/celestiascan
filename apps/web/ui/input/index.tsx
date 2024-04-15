@@ -6,6 +6,7 @@ export type InputProps = Omit<
   "size" | "defaultValue"
 > & {
   inputClassName?: string;
+  labelClassName?: string;
   helpText?: string;
   renderLeadingIcon?: (classNames: string) => React.ReactNode;
   renderTrailingIcon?: (classNames: string) => React.ReactNode;
@@ -22,6 +23,7 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
       className,
       helpText,
       inputClassName,
+      labelClassName,
       label,
       renderLeadingIcon,
       renderTrailingIcon,
@@ -44,7 +46,10 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
 
     return (
       <div className={cn(className, "flex w-full flex-col gap-1")}>
-        <label htmlFor={defaultId ?? id} className={cn(hideLabel && "sr-only")}>
+        <label
+          htmlFor={defaultId ?? id}
+          className={cn(hideLabel && "sr-only", labelClassName)}
+        >
           {label}
         </label>
         <div
@@ -58,21 +63,24 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
               "ring-red-500/20 focus-within:border-red-500 focus-within:ring-2":
                 !!error,
               "py-2 px-2": size === "medium",
-              "py-1 text-sm": size === "small",
+              "py-1 text-sm": size === "small" && renderLeadingIcon,
+              "py-2 text-sm": size === "small" && !renderLeadingIcon,
               "py-3": size === "large",
-              "cursor-not-allowed bg-disabled": disabled,
+              "cursor-not-allowed bg-muted-100": disabled,
             },
             className,
           )}
         >
-          <div className="inline-grid place-items-center flex-shrink-0">
-            {renderLeadingIcon?.(
-              cn("text-muted flex-shrink-0 m-1.5", {
-                "h-4 w-4": size !== "large",
-                "h-5 w-5": size === "large",
-              }),
-            )}
-          </div>
+          {renderLeadingIcon && (
+            <div className="inline-grid place-items-center flex-shrink-0">
+              {renderLeadingIcon?.(
+                cn("text-muted flex-shrink-0 m-1.5", {
+                  "h-4 w-4": size !== "large",
+                  "h-5 w-5": size === "large",
+                }),
+              )}
+            </div>
+          )}
           <input
             {...otherProps}
             ref={ref}
@@ -84,7 +92,7 @@ export const Input = React.forwardRef<React.ElementRef<"input">, InputProps>(
             disabled={disabled}
             required={required}
             className={cn(
-              "w-full bg-transparent focus:outline-none disabled:text-foreground/30 placeholder:text-muted",
+              "w-full bg-transparent focus:outline-none disabled:text-foreground/70 placeholder:text-muted",
               inputClassName,
               {
                 "cursor-not-allowed": disabled,

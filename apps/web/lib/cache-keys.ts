@@ -6,23 +6,16 @@ import type { HeadlessRoute } from "./headless-utils";
  */
 export const CACHE_KEYS = {
   networks: {
-    all: () => ["INTEGRATION"],
+    all: () => ["INTEGRATION_LIST"],
+    local: () => [...CACHE_KEYS.networks.all(), "INTEGRATION_LOCAL"],
     summary: (nexToken: string | null = null) => [
       ...CACHE_KEYS.networks.all(),
       "INTEGRATION_SUMMARY",
       "INTEGRATION_SUMMARY_NEXT_TOKEN",
       nexToken?.slice(0, 20) ?? "null",
     ],
-    single: (slug: string) => [
-      ...CACHE_KEYS.networks.all(),
-      "INTEGRATION_SINGLE",
-      slug,
-    ],
-    platform: (platform: string) => [
-      ...CACHE_KEYS.networks.all(),
-      "platform",
-      platform,
-    ],
+    single: (slug: string) => ["INTEGRATION_SINGLE", slug],
+    platform: (platform: string) => ["platform", platform],
     status: (slug: string) => [
       ...CACHE_KEYS.networks.single(slug),
       "INTEGRATION_STATUS",
@@ -59,10 +52,13 @@ export const CACHE_KEYS = {
     txHash,
     msgIndex,
   ],
-  ibcResolve: (resolverId: string, input: any) => [
-    "IBC_RESOLVE",
-    resolverId,
-    input,
-  ],
+  ibcResolve: (
+    resolverId: string,
+    input: {
+      hash: string;
+      step: number;
+      slug: string;
+    },
+  ) => ["IBC_RESOLVE", resolverId, input] as const,
   blob: (url: string) => ["BLOB", url],
 } as const;

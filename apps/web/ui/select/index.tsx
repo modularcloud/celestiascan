@@ -46,12 +46,16 @@ export const Select = React.forwardRef<
       disabled={disabled}
     >
       <RadixSelect.Trigger
-        className="flex w-full flex-col gap-1 items-start group focus:outline-none"
+        className={cn(
+          "flex w-full flex-col gap-1 items-start group focus:outline-none",
+          className,
+        )}
         aria-label={label}
         ref={ref}
       >
         <p>{label}</p>
         <div
+          aria-hidden="true"
           className={cn(
             "flex justify-between w-full",
             "flex w-full items-center gap-2 rounded-lg border px-3",
@@ -68,7 +72,6 @@ export const Select = React.forwardRef<
               "py-3": size === "large",
               "cursor-not-allowed bg-disabled": disabled,
             },
-            className,
           )}
         >
           <RadixSelect.Value placeholder={placeholder} />

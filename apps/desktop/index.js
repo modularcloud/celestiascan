@@ -1,8 +1,16 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 // @ts-check
-const { app, BrowserWindow, dialog } = require("electron");
+const {
+  app,
+  Menu,
+  BrowserWindow,
+  dialog,
+  MenuItem,
+  ipcMain,
+} = require("electron");
 const todesktop = require("@todesktop/runtime");
 const log = require("electron-log/main");
+const path = require("path");
 
 log.initialize();
 log.transports.ipc.level = "verbose";
@@ -37,6 +45,7 @@ function getRandomPort() {
 
 let hasServerStarted = false;
 let totalAttempsLeft = 10;
+process.env.ROOT_USER_PATH = app.getPath("userData");
 while (!hasServerStarted && totalAttempsLeft > 0) {
   try {
     process.env.PORT = getRandomPort().toString();
@@ -63,8 +72,55 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       devTools: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  /** @type any */
+  const template = [
+    {
+      label: "File",
+      submenu: [{ label: "Exit", role: "quit" }],
+    },
+    {
+      label: "Edit",
+      submenu: [
+        { label: "Undo", role: "undo" },
+        { label: "Redo", role: "redo" },
+        { type: "separator" },
+        { label: "Cut", role: "cut" },
+        { label: "Copy", role: "copy" },
+        { label: "Paste", role: "paste" },
+      ],
+    },
+    {
+      label: "View",
+      submenu: [
+        { label: "Reload", role: "reload" },
+        { label: "Toggle Developer Tools", role: "toggleDevTools" },
+      ],
+    },
+    {
+      label: "Develop",
+      submenu: [
+        {
+          label: "Add Local Chain",
+          click: () => {
+            mainWindow.webContents.send("navigate", "/register/local-chain");
+          },
+        },
+        {
+          label: "Go home",
+          click: () => {
+            mainWindow.webContents.send("navigate", "/");
+          },
+        },
+      ],
+    },
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   // this is to override the title set by `./apps/web/server.js`
   // so that the window will show `Explorer` instead of `next-server`
@@ -74,6 +130,9 @@ function createWindow() {
   mainWindow.loadURL(`http://localhost:${process.env.PORT}`);
   mainWindow.on("closed", () => {
     app.quit();
+  });
+  ipcMain.on("navigate", (event, route) => {
+    mainWindow.webContents.send("navigate", route);
   });
 }
 

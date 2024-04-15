@@ -31,8 +31,6 @@ export function useSearcheableEntities({
       apiURL.searchParams.set("query", query);
       apiURL.searchParams.set("networkSlug", network);
 
-      console.log({ apiURL });
-
       return jsonFetch(apiURL, { signal })
         .then(searhableEntitiesResponseSchema.parse)
         .then((res) => res.data);

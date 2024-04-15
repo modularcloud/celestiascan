@@ -7,7 +7,7 @@ import { integrations, integrationList } from "~/lib/cache";
 
 export const singleNetworkSchema = z.object({
   config: z.object({
-    logoUrl: z.string().url(),
+    logoUrl: z.string(),
     rpcUrls: z.record(
       z.enum(["evm", "cosmos", "svm", "celestia"]),
       z.string().url(),
@@ -38,22 +38,56 @@ export const singleNetworkSchema = z.object({
   chainName: z.string(),
   brand: z.string(),
   accountId: z.string(),
-  internalId: z.string(),
+  internalId: z.coerce.number(),
   integrationId: z.string().uuid(),
   createdTime: z.coerce.date(),
+  namespace: z.string().nullish(),
+  startHeight: z.coerce.number().nullish(),
+  daLayer: z.string().nullish(),
 });
 
 export type SingleNetwork = z.infer<typeof singleNetworkSchema>;
 
 const allNetworkSchema = z.array(singleNetworkSchema);
 
-export const getAllNetworks = cache(function getAllNetworks() {
-  return allNetworkSchema.parse(integrationList.value);
+export const getAllNetworks = cache(async function getAllNetworks() {
+  let localChains: SingleNetwork[] = [];
+  if (env.NEXT_PUBLIC_TARGET === "electron") {
+    try {
+      localChains = await fetch(
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        `http://127.0.0.1:${process.env.PORT ?? 3000}/api/local-chains/`,
+        {
+          next: { tags: CACHE_KEYS.networks.local() },
+        },
+      )
+        .then((r) => r.json())
+        .then(allNetworkSchema.parse);
+    } catch (error) {
+      //... do absolutely nothing
+    }
+  }
+  return allNetworkSchema.parse(
+    localChains.concat(integrationList.value as unknown as SingleNetwork[]),
+  );
 });
 
 export const getSingleNetwork = cache(async function getSingleNetwork(
   slug: string,
 ) {
+  if (env.NEXT_PUBLIC_TARGET === "electron" && slug.startsWith("local")) {
+    try {
+      return await fetch(
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        `http://127.0.0.1:${process.env.PORT ?? 3000}/api/local-chains/${slug}`,
+      )
+        .then((r) => r.json())
+        .then(singleNetworkSchema.parse);
+    } catch (error) {
+      return null;
+    }
+  }
+
   try {
     // @ts-expect-error
     const found = integrations[slug].value;
@@ -122,6 +156,6 @@ async function getSingleNetworkFetch(slug: string) {
 }
 
 export const getAllPaidNetworks = cache(async function getAllPaidNetworks() {
-  const allNetworks = getAllNetworks();
+  const allNetworks = await getAllNetworks();
   return allNetworks.filter((network) => network.paidVersion).slice(0, 30);
 });

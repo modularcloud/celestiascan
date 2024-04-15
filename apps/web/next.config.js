@@ -13,6 +13,10 @@ const config = {
       },
     ];
   },
+  experimental: {
+    serverComponentsExternalPackages:
+      process.env.NODE_ENV === "production" ? ["@electric-sql/pglite"] : [],
+  },
   reactStrictMode: true,
   transpilePackages: ["service-manager"],
   logging: {
@@ -47,6 +51,10 @@ const config = {
       {
         protocol: "https",
         hostname: "raw.githubusercontent.com",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
       },
     ],
   },
