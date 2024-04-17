@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { capitalize } from "~/lib/shared-utils";
 import { Button } from "~/ui/button";
+import { cn } from "~/ui/shadcn/utils";
 
 export type BlobStreamPageProps = {
   params: {
@@ -32,7 +33,13 @@ export default function BlobStreamPage({ params }: BlobStreamPageProps) {
 
         <div className="flex gap-6"></div>
         <div className="flex relative items-center justify-center border py-3 rounded-lg bg-primary/5 overflow-hidden">
-          <div></div>
+          <div
+            className="absolute top-0 bottom-0 left-0 right-2/3 bg-gradient-to-r from-primary to-transparent"
+            style={{
+              maskImage: `url('/images/dots-mask.svg')`,
+              maskSize: "contain",
+            }}
+          />
           <dl className="flex flex-col gap-2 items-center">
             <div className="flex">
               <dt>Latest Block on Celestia</dt>&nbsp;
@@ -51,14 +58,24 @@ export default function BlobStreamPage({ params }: BlobStreamPageProps) {
               <dd>1000</dd>
             </div>
           </dl>
-          <div></div>
+          <div
+            className="absolute top-0 bottom-0 right-0 left-2/3 bg-gradient-to-l from-primary to-transparent"
+            style={{
+              maskImage: `url('/images/dots-mask.svg')`,
+              maskSize: "contain",
+              maskRepeat: "no-repeat",
+              maskPosition: "top right",
+            }}
+          />
         </div>
 
         <table>
           <thead>
-            <th className="font-medium">Transfer</th>
-            <th className="font-medium">File</th>
-            <th className="font-medium">Time</th>
+            <tr>
+              <th className="font-medium">Transfer</th>
+              <th className="font-medium">File</th>
+              <th className="font-medium">Time</th>
+            </tr>
           </thead>
           <tbody></tbody>
         </table>

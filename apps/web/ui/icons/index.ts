@@ -1,3 +1,4 @@
+export { default as ArCube } from "./ArCube";
 export { default as ArrowDown } from "./ArrowDown";
 export { default as ArrowLeftRight } from "./ArrowLeftRight";
 export { default as ArrowOff } from "./ArrowOff";
