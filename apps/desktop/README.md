@@ -22,7 +22,7 @@
    ```
 
    You may get an error when building the app,
-   for that you can go to the web folder and build it manuaally :
+   for that you can go to the web folder and build it manually :
 
    ```shell
    cd apps/web
